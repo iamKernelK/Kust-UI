@@ -1,83 +1,101 @@
+-- ==========================================================
+-- 🚀 KUST UI LIBRARY v1.0
+-- Premium Roblox UI Library by Kust
+-- Features: Theme System, QuickButton (Hold 3s), 
+-- Slider Drag-Up Effect, Toggle Drag-Right Effect,
+-- Professional Animations, Lock System, and more.
+-- ==========================================================
+
 local KustUI = {}
 KustUI.__index = KustUI
 
--- ============================================================
+-- Services
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local GuiService = game:GetService("GuiService")
+
+-- ==========================================================
 -- 🎨 THEME SYSTEM
--- ============================================================
-KustUI.Themes = {
+-- ==========================================================
+local Themes = {
     Default = {
-        Primary       = Color3.fromRGB(255, 140, 0),
-        PrimaryDark   = Color3.fromRGB(180, 80, 0),
-        PrimaryLight  = Color3.fromRGB(255, 180, 80),
-        Background    = Color3.fromRGB(12, 8, 5),
-        BackgroundMid = Color3.fromRGB(18, 10, 6),
-        ElementBg     = Color3.fromRGB(20, 15, 12),
-        ElementHover  = Color3.fromRGB(28, 18, 11),
-        Text          = Color3.fromRGB(255, 255, 255),
-        TextDim       = Color3.fromRGB(180, 180, 180),
-        TextDark      = Color3.fromRGB(130, 130, 130),
-        TrackBg       = Color3.fromRGB(25, 25, 25),
-        ToggleOff     = Color3.fromRGB(40, 35, 35),
-        Success       = Color3.fromRGB(46, 204, 113),
-        Danger        = Color3.fromRGB(231, 76, 60),
-        LockOverlay   = Color3.fromRGB(8, 6, 5),
+        Primary = Color3.fromRGB(255, 140, 0),
+        PrimaryDark = Color3.fromRGB(180, 80, 0),
+        PrimaryLight = Color3.fromRGB(255, 180, 80),
+        Background = Color3.fromRGB(12, 8, 5),
+        BackgroundLight = Color3.fromRGB(18, 12, 8),
+        Surface = Color3.fromRGB(20, 15, 12),
+        SurfaceHover = Color3.fromRGB(30, 22, 16),
+        Text = Color3.fromRGB(255, 255, 255),
+        TextDim = Color3.fromRGB(180, 180, 180),
+        TextDark = Color3.fromRGB(130, 130, 130),
+        Success = Color3.fromRGB(46, 204, 113),
+        Danger = Color3.fromRGB(231, 76, 60),
+        Stroke = Color3.fromRGB(255, 140, 0),
     },
-    Ocean = {
-        Primary       = Color3.fromRGB(0, 170, 255),
-        PrimaryDark   = Color3.fromRGB(0, 100, 180),
-        PrimaryLight  = Color3.fromRGB(100, 200, 255),
-        Background    = Color3.fromRGB(5, 10, 15),
-        BackgroundMid = Color3.fromRGB(8, 15, 22),
-        ElementBg     = Color3.fromRGB(12, 18, 28),
-        ElementHover  = Color3.fromRGB(18, 28, 42),
-        Text          = Color3.fromRGB(255, 255, 255),
-        TextDim       = Color3.fromRGB(180, 200, 220),
-        TextDark      = Color3.fromRGB(100, 120, 140),
-        TrackBg       = Color3.fromRGB(20, 30, 40),
-        ToggleOff     = Color3.fromRGB(30, 40, 50),
-        Success       = Color3.fromRGB(46, 204, 113),
-        Danger        = Color3.fromRGB(231, 76, 60),
-        LockOverlay   = Color3.fromRGB(4, 8, 12),
+    Midnight = {
+        Primary = Color3.fromRGB(88, 101, 242),
+        PrimaryDark = Color3.fromRGB(60, 70, 200),
+        PrimaryLight = Color3.fromRGB(120, 140, 255),
+        Background = Color3.fromRGB(10, 10, 18),
+        BackgroundLight = Color3.fromRGB(15, 15, 25),
+        Surface = Color3.fromRGB(20, 20, 35),
+        SurfaceHover = Color3.fromRGB(30, 30, 50),
+        Text = Color3.fromRGB(255, 255, 255),
+        TextDim = Color3.fromRGB(180, 180, 200),
+        TextDark = Color3.fromRGB(120, 120, 140),
+        Success = Color3.fromRGB(46, 204, 113),
+        Danger = Color3.fromRGB(231, 76, 60),
+        Stroke = Color3.fromRGB(88, 101, 242),
     },
     Crimson = {
-        Primary       = Color3.fromRGB(220, 20, 60),
-        PrimaryDark   = Color3.fromRGB(150, 10, 30),
-        PrimaryLight  = Color3.fromRGB(255, 80, 100),
-        Background    = Color3.fromRGB(15, 5, 8),
-        BackgroundMid = Color3.fromRGB(22, 8, 12),
-        ElementBg     = Color3.fromRGB(28, 12, 16),
-        ElementHover  = Color3.fromRGB(40, 18, 24),
-        Text          = Color3.fromRGB(255, 255, 255),
-        TextDim       = Color3.fromRGB(220, 180, 180),
-        TextDark      = Color3.fromRGB(150, 120, 120),
-        TrackBg       = Color3.fromRGB(35, 20, 25),
-        ToggleOff     = Color3.fromRGB(45, 30, 35),
-        Success       = Color3.fromRGB(46, 204, 113),
-        Danger        = Color3.fromRGB(231, 76, 60),
-        LockOverlay   = Color3.fromRGB(12, 4, 6),
+        Primary = Color3.fromRGB(220, 20, 60),
+        PrimaryDark = Color3.fromRGB(150, 10, 30),
+        PrimaryLight = Color3.fromRGB(255, 60, 90),
+        Background = Color3.fromRGB(15, 5, 8),
+        BackgroundLight = Color3.fromRGB(22, 8, 12),
+        Surface = Color3.fromRGB(30, 12, 18),
+        SurfaceHover = Color3.fromRGB(45, 18, 25),
+        Text = Color3.fromRGB(255, 255, 255),
+        TextDim = Color3.fromRGB(200, 180, 180),
+        TextDark = Color3.fromRGB(150, 120, 120),
+        Success = Color3.fromRGB(46, 204, 113),
+        Danger = Color3.fromRGB(231, 76, 60),
+        Stroke = Color3.fromRGB(220, 20, 60),
+    },
+    Emerald = {
+        Primary = Color3.fromRGB(0, 200, 150),
+        PrimaryDark = Color3.fromRGB(0, 140, 100),
+        PrimaryLight = Color3.fromRGB(50, 255, 200),
+        Background = Color3.fromRGB(5, 12, 10),
+        BackgroundLight = Color3.fromRGB(8, 18, 15),
+        Surface = Color3.fromRGB(12, 25, 20),
+        SurfaceHover = Color3.fromRGB(18, 38, 30),
+        Text = Color3.fromRGB(255, 255, 255),
+        TextDim = Color3.fromRGB(180, 200, 190),
+        TextDark = Color3.fromRGB(120, 150, 130),
+        Success = Color3.fromRGB(46, 204, 113),
+        Danger = Color3.fromRGB(231, 76, 60),
+        Stroke = Color3.fromRGB(0, 200, 150),
     }
 }
 
--- ============================================================
--- SERVICES
--- ============================================================
-local TweenService       = game:GetService("TweenService")
-local UserInputService   = game:GetService("UserInputService")
-local CoreGui            = game:GetService("CoreGui")
-local RunService         = game:GetService("RunService")
-local Players            = game:GetService("Players")
-local GuiService         = game:GetService("GuiService")
+local CurrentTheme = Themes.Default
+local function GetTheme() return CurrentTheme end
 
--- ============================================================
--- UTILITY FUNCTIONS
--- ============================================================
+-- ==========================================================
+-- ⚡ UTILITY FUNCTIONS
+-- ==========================================================
 local function MakeDraggable(dragPart, targetPart)
-    local Dragging, DragInput, DragStart, StartPosition
+    local Dragging, DragInput, DragStart, StartPos
     dragPart.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             Dragging = true
             DragStart = input.Position
-            StartPosition = targetPart.Position
+            StartPos = targetPart.Position
             input.Changed:Connect(function()
                 if input.UserInputState == Enum.UserInputState.End then Dragging = false end
             end)
@@ -91,199 +109,341 @@ local function MakeDraggable(dragPart, targetPart)
     UserInputService.InputChanged:Connect(function(input)
         if input == DragInput and Dragging then
             local Delta = input.Position - DragStart
-            local pos = UDim2.new(StartPosition.X.Scale, StartPosition.X.Offset + Delta.X,
-                                  StartPosition.Y.Scale, StartPosition.Y.Offset + Delta.Y)
+            local pos = UDim2.new(StartPos.X.Scale, StartPos.X.Offset + Delta.X, StartPos.Y.Scale, StartPos.Y.Offset + Delta.Y)
             TweenService:Create(targetPart, TweenInfo.new(0.06, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Position = pos}):Play()
         end
     end)
 end
 
-local function ApplyGradient(instance, theme)
+local function ApplyGradient(instance, colors)
     local grad = Instance.new("UIGradient")
-    grad.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, theme.PrimaryLight),
-        ColorSequenceKeypoint.new(0.5, theme.Primary),
-        ColorSequenceKeypoint.new(1, theme.PrimaryDark)
-    })
+    if colors then
+        grad.Color = colors
+    else
+        local theme = GetTheme()
+        grad.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, theme.PrimaryLight),
+            ColorSequenceKeypoint.new(0.5, theme.Primary),
+            ColorSequenceKeypoint.new(1, theme.PrimaryDark)
+        })
+    end
     grad.Rotation = 45
     grad.Parent = instance
     return grad
 end
 
-local function ApplyLock(element, options, theme)
-    if not options.Locked then return end
-    local requiredCode = options.Code
-    local onUnlock = options.OnUnlock or function() end
+local function CreateRipple(parent, position, color)
+    local theme = GetTheme()
+    local ripple = Instance.new("Frame")
+    ripple.BackgroundColor3 = color or theme.Primary
+    ripple.BackgroundTransparency = 0.4
+    ripple.Position = UDim2.new(0, position.X, 0, position.Y)
+    ripple.AnchorPoint = Vector2.new(0.5, 0.5)
+    ripple.Parent = parent
+    Instance.new("UICorner", ripple).CornerRadius = UDim.new(1, 0)
+    local targetSize = math.max(parent.AbsoluteSize.X, parent.AbsoluteSize.Y) * 1.8
+    TweenService:Create(ripple, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        Size = UDim2.new(0, targetSize, 0, targetSize),
+        BackgroundTransparency = 1
+    }):Play()
+    task.delay(0.5, function() ripple:Destroy() end)
+end
 
-    local overlay = Instance.new("Frame")
-    overlay.Name = "KustLock_Overlay"
-    overlay.Size = UDim2.new(1, 0, 1, 0)
-    overlay.BackgroundColor3 = theme.LockOverlay
-    overlay.BackgroundTransparency = 0.2
-    overlay.ZIndex = 1000
-    overlay.Active = true
-    overlay.ClipsDescendants = true
-    overlay.Parent = element
-    Instance.new("UICorner", overlay).CornerRadius = UDim.new(0, 8)
+-- ==========================================================
+-- 🔐 LOCK MODULE
+-- ==========================================================
+local LockModule = {}
+LockModule.UsedCodes = {}
 
-    local overlayGrad = Instance.new("UIGradient", overlay)
-    overlayGrad.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(150,150,150))
+function LockModule.Apply(Element, Options)
+    if not Element then return end
+    local theme = GetTheme()
+    local requiredCode = Options.Code
+    local onUnlockCallback = Options.OnUnlock or function() end
+
+    local LockOverlay = Instance.new("Frame")
+    LockOverlay.Name = "KustLock_Overlay"
+    LockOverlay.Size = UDim2.new(1, 0, 1, 0)
+    LockOverlay.BackgroundColor3 = theme.Background
+    LockOverlay.BackgroundTransparency = 0.15
+    LockOverlay.ZIndex = 1000
+    LockOverlay.Active = true
+    LockOverlay.ClipsDescendants = true
+    LockOverlay.Parent = Element
+    Instance.new("UICorner", LockOverlay).CornerRadius = UDim.new(0, 8)
+
+    local OverlayGradient = Instance.new("UIGradient", LockOverlay)
+    OverlayGradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(150, 150, 150))
     })
-    overlayGrad.Rotation = 45
+    OverlayGradient.Rotation = 45
 
-    local stroke = Instance.new("UIStroke", overlay)
-    stroke.Color = theme.Primary
-    stroke.Thickness = 1
-    stroke.Transparency = 0.7
-    TweenService:Create(stroke, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Transparency = 0.3}):Play()
+    local LockStroke = Instance.new("UIStroke", LockOverlay)
+    LockStroke.Color = theme.Primary
+    LockStroke.Thickness = 1
+    LockStroke.Transparency = 0.7
+    TweenService:Create(LockStroke, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Transparency = 0.3}):Play()
 
-    local lockIcon = Instance.new("ImageLabel", overlay)
-    lockIcon.BackgroundTransparency = 1
-    lockIcon.Image = "rbxassetid://15117261700"
-    lockIcon.ImageColor3 = theme.Primary
-    lockIcon.ZIndex = 1001
+    local LockIcon = Instance.new("ImageLabel", LockOverlay)
+    LockIcon.BackgroundTransparency = 1
+    LockIcon.Image = "rbxassetid://15117261700"
+    LockIcon.ImageColor3 = theme.Primary
+    LockIcon.ZIndex = 1001
 
-    local statusText = Instance.new("TextLabel", overlay)
-    statusText.BackgroundTransparency = 1
-    statusText.TextColor3 = theme.Primary
-    statusText.Font = Enum.Font.GothamBold
-    statusText.TextSize = 12
-    statusText.ZIndex = 1001
+    local StatusText = Instance.new("TextLabel", LockOverlay)
+    StatusText.BackgroundTransparency = 1
+    StatusText.TextColor3 = theme.Primary
+    StatusText.Font = Enum.Font.GothamBold
+    StatusText.TextSize = 12
+    StatusText.ZIndex = 1001
 
-    local codeBox
+    local CodeBox
     if requiredCode then
-        codeBox = Instance.new("TextBox", overlay)
-        codeBox.BackgroundColor3 = Color3.fromRGB(16, 11, 9)
-        codeBox.PlaceholderText = "Enter Code"
-        codeBox.Text = ""
-        codeBox.TextColor3 = Color3.fromRGB(255,255,255)
-        codeBox.PlaceholderColor3 = Color3.fromRGB(100,100,100)
-        codeBox.Font = Enum.Font.GothamMedium
-        codeBox.TextSize = 11
-        codeBox.ZIndex = 1002
-        Instance.new("UICorner", codeBox).CornerRadius = UDim.new(0, 6)
-        local boxStroke = Instance.new("UIStroke", codeBox)
-        boxStroke.Color = theme.Primary
-        boxStroke.Thickness = 1
-        boxStroke.Transparency = 0.5
+        CodeBox = Instance.new("TextBox", LockOverlay)
+        CodeBox.BackgroundColor3 = theme.Surface
+        CodeBox.PlaceholderText = "Enter Code"
+        CodeBox.Text = ""
+        CodeBox.TextColor3 = theme.Text
+        CodeBox.PlaceholderColor3 = theme.TextDark
+        CodeBox.Font = Enum.Font.GothamMedium
+        CodeBox.TextSize = 11
+        CodeBox.ZIndex = 1002
+        Instance.new("UICorner", CodeBox).CornerRadius = UDim.new(0, 6)
+        local BoxStroke = Instance.new("UIStroke", CodeBox)
+        BoxStroke.Color = theme.Primary
+        BoxStroke.Thickness = 1
+        BoxStroke.Transparency = 0.5
     end
 
-    local usedCodes = {}
-    local function updateLayout()
-        local sy = element.AbsoluteSize.Y
-        if sy <= 65 then
-            lockIcon.Size = UDim2.new(0, 18, 0, 18)
-            lockIcon.Position = UDim2.new(0, 15, 0.5, -9)
-            lockIcon.AnchorPoint = Vector2.new(0, 0)
-            statusText.Size = UDim2.new(0, 120, 1, 0)
-            statusText.Position = UDim2.new(0, 42, 0, 0)
-            statusText.TextXAlignment = Enum.TextXAlignment.Left
-            statusText.TextYAlignment = Enum.TextYAlignment.Center
-            statusText.Text = requiredCode and "Requires Code" or "Locked"
-            if codeBox then
-                codeBox.Size = UDim2.new(0, 85, 0, 24)
-                codeBox.Position = UDim2.new(1, -12, 0.5, 0)
-                codeBox.AnchorPoint = Vector2.new(1, 0.5)
+    local function UpdateLayout()
+        local sizeY = Element.AbsoluteSize.Y
+        if sizeY <= 65 then
+            LockIcon.Size = UDim2.new(0, 18, 0, 18)
+            LockIcon.Position = UDim2.new(0, 15, 0.5, -9)
+            LockIcon.AnchorPoint = Vector2.new(0, 0)
+            StatusText.Size = UDim2.new(0, 120, 1, 0)
+            StatusText.Position = UDim2.new(0, 42, 0, 0)
+            StatusText.TextXAlignment = Enum.TextXAlignment.Left
+            StatusText.TextYAlignment = Enum.TextYAlignment.Center
+            StatusText.Text = requiredCode and "Requires Code" or "Locked"
+            if CodeBox then
+                CodeBox.Size = UDim2.new(0, 85, 0, 24)
+                CodeBox.Position = UDim2.new(1, -12, 0.5, 0)
+                CodeBox.AnchorPoint = Vector2.new(1, 0.5)
             end
         else
-            lockIcon.Size = UDim2.new(0, 32, 0, 32)
-            lockIcon.Position = UDim2.new(0.5, 0, 0.4, 0)
-            lockIcon.AnchorPoint = Vector2.new(0.5, 0.5)
-            statusText.Size = UDim2.new(1, 0, 0, 25)
-            statusText.Position = UDim2.new(0, 0, 0.55, 0)
-            statusText.TextXAlignment = Enum.TextXAlignment.Center
-            statusText.TextYAlignment = Enum.TextYAlignment.Center
-            statusText.TextSize = 14
-            statusText.Text = requiredCode and "This Section Requires an Access Code" or "Content Locked By Developer"
-            if codeBox then
-                codeBox.Size = UDim2.new(0, 140, 0, 30)
-                codeBox.Position = UDim2.new(0.5, 0, 0.72, 0)
-                codeBox.AnchorPoint = Vector2.new(0.5, 0.5)
-                codeBox.TextSize = 13
+            LockIcon.Size = UDim2.new(0, 32, 0, 32)
+            LockIcon.Position = UDim2.new(0.5, 0, 0.4, 0)
+            LockIcon.AnchorPoint = Vector2.new(0.5, 0.5)
+            StatusText.Size = UDim2.new(1, 0, 0, 25)
+            StatusText.Position = UDim2.new(0, 0, 0.55, 0)
+            StatusText.TextXAlignment = Enum.TextXAlignment.Center
+            StatusText.TextYAlignment = Enum.TextYAlignment.Center
+            StatusText.TextSize = 14
+            StatusText.Text = requiredCode and "This Section Requires an Access Code" or "Content Locked By Developer"
+            if CodeBox then
+                CodeBox.Size = UDim2.new(0, 140, 0, 30)
+                CodeBox.Position = UDim2.new(0.5, 0, 0.72, 0)
+                CodeBox.AnchorPoint = Vector2.new(0.5, 0.5)
+                CodeBox.TextSize = 13
             end
         end
     end
-    updateLayout()
-    element:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateLayout)
 
-    if codeBox then
-        codeBox.FocusLost:Connect(function(enterPressed)
-            if not enterPressed then return end
-            local input = codeBox.Text
-            codeBox.Text = ""
-            if input == "" then return end
-            codeBox.Visible = false
-            for i = 1, 2 do
-                statusText.Text = "Verifying Access." task.wait(0.2)
-                statusText.Text = "Verifying Access.." task.wait(0.2)
-                statusText.Text = "Verifying Access..." task.wait(0.2)
-            end
-            if input == tostring(requiredCode) and not usedCodes[input] then
-                usedCodes[input] = true
-                statusText.Text = "Access Granted!"
-                statusText.TextColor3 = theme.Success
-                lockIcon.ImageColor3 = theme.Success
-                stroke.Color = theme.Success
-                TweenService:Create(lockIcon, TweenInfo.new(0.2), {Size = UDim2.new(0,0,0,0)}):Play()
-                task.wait(0.2)
-                lockIcon.Image = "rbxassetid://13132087769"
-                local ts = element.AbsoluteSize.Y <= 65 and UDim2.new(0,20,0,20) or UDim2.new(0,36,0,36)
-                TweenService:Create(lockIcon, TweenInfo.new(0.4, Enum.EasingStyle.Back), {Size = ts}):Play()
-                task.wait(1.5)
-                local fade = TweenService:Create(overlay, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
-                TweenService:Create(lockIcon, TweenInfo.new(0.4), {ImageTransparency = 1}):Play()
-                TweenService:Create(statusText, TweenInfo.new(0.4), {TextTransparency = 1}):Play()
-                TweenService:Create(stroke, TweenInfo.new(0.4), {Transparency = 1}):Play()
-                fade:Play()
-                fade.Completed:Connect(function() overlay:Destroy(); onUnlock() end)
-            else
-                statusText.Text = "Access Denied!"
-                statusText.TextColor3 = theme.Danger
-                lockIcon.ImageColor3 = theme.Danger
-                stroke.Color = theme.Danger
-                local orig = statusText.Position
-                for i = 1, 6 do
-                    statusText.Position = orig + UDim2.new(0, math.random(-3,3), 0, 0)
-                    task.wait(0.04)
+    UpdateLayout()
+    Element:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateLayout)
+
+    if CodeBox then
+        CodeBox.FocusLost:Connect(function(enterPressed)
+            if enterPressed then
+                local input = CodeBox.Text
+                CodeBox.Text = ""
+                if input == "" then return end
+                CodeBox.Visible = false
+                for i = 1, 2 do
+                    StatusText.Text = "Verifying Access." task.wait(0.2)
+                    StatusText.Text = "Verifying Access.." task.wait(0.2)
+                    StatusText.Text = "Verifying Access..." task.wait(0.2)
                 end
-                statusText.Position = orig
-                task.wait(1.2)
-                statusText.TextColor3 = theme.Primary
-                lockIcon.ImageColor3 = theme.Primary
-                stroke.Color = theme.Primary
-                updateLayout()
-                codeBox.Visible = true
+                if input == tostring(requiredCode) and not LockModule.UsedCodes[input] then
+                    LockModule.UsedCodes[input] = true
+                    StatusText.Text = "Access Granted!"
+                    StatusText.TextColor3 = theme.Success
+                    LockIcon.ImageColor3 = theme.Success
+                    LockStroke.Color = theme.Success
+                    TweenService:Create(LockIcon, TweenInfo.new(0.2), {Size = UDim2.new(0, 0, 0, 0)}):Play()
+                    task.wait(0.2)
+                    LockIcon.Image = "rbxassetid://13132087769"
+                    local targetSize = Element.AbsoluteSize.Y <= 65 and UDim2.new(0, 20, 0, 20) or UDim2.new(0, 36, 0, 36)
+                    TweenService:Create(LockIcon, TweenInfo.new(0.4, Enum.EasingStyle.Back), {Size = targetSize}):Play()
+                    task.wait(1.5)
+                    local fade = TweenService:Create(LockOverlay, TweenInfo.new(0.5, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
+                    TweenService:Create(LockIcon, TweenInfo.new(0.4), {ImageTransparency = 1}):Play()
+                    TweenService:Create(StatusText, TweenInfo.new(0.4), {TextTransparency = 1}):Play()
+                    TweenService:Create(LockStroke, TweenInfo.new(0.4), {Transparency = 1}):Play()
+                    fade:Play()
+                    fade.Completed:Connect(function()
+                        LockOverlay:Destroy()
+                        onUnlockCallback()
+                    end)
+                else
+                    StatusText.Text = "Access Denied!"
+                    StatusText.TextColor3 = theme.Danger
+                    LockIcon.ImageColor3 = theme.Danger
+                    LockStroke.Color = theme.Danger
+                    local origPos = StatusText.Position
+                    for i = 1, 6 do
+                        StatusText.Position = origPos + UDim2.new(0, math.random(-3, 3), 0, 0)
+                        task.wait(0.04)
+                    end
+                    StatusText.Position = origPos
+                    task.wait(1.2)
+                    StatusText.TextColor3 = theme.Primary
+                    LockIcon.ImageColor3 = theme.Primary
+                    LockStroke.Color = theme.Primary
+                    UpdateLayout()
+                    CodeBox.Visible = true
+                end
             end
         end)
     end
 end
 
--- ============================================================
--- CREATE WINDOW
--- ============================================================
+-- ==========================================================
+-- 🚀 QUICK BUTTON MODULE (Hold 3 Seconds)
+-- ==========================================================
+local QuickButtonModule = {}
+QuickButtonModule.ActiveButtons = {}
+
+function QuickButtonModule:CreateFromElement(Element, Config)
+    local theme = GetTheme()
+    local ScreenGui = Element:FindFirstAncestorOfClass("ScreenGui")
+    if not ScreenGui then return end
+
+    local QuickFrame = Instance.new("Frame")
+    QuickFrame.Name = "KustQuickBtn_" .. (Config.Name or "Quick")
+    QuickFrame.Size = UDim2.new(0, 60, 0, 60)
+    QuickFrame.Position = UDim2.new(0.8, 0, 0.8, 0)
+    QuickFrame.BackgroundColor3 = theme.Surface
+    QuickFrame.BorderSizePixel = 0
+    QuickFrame.Active = true
+    QuickFrame.ZIndex = 9999
+    QuickFrame.Parent = ScreenGui
+    Instance.new("UICorner", QuickFrame).CornerRadius = UDim.new(1, 0)
+
+    local QuickStroke = Instance.new("UIStroke", QuickFrame)
+    QuickStroke.Color = theme.Primary
+    QuickStroke.Thickness = 2
+    ApplyGradient(QuickStroke)
+
+    local QuickIcon = Instance.new("ImageLabel", QuickFrame)
+    QuickIcon.Size = UDim2.new(0, 30, 0, 30)
+    QuickIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
+    QuickIcon.AnchorPoint = Vector2.new(0.5, 0.5)
+    QuickIcon.BackgroundTransparency = 1
+    QuickIcon.Image = Config.Icon or "rbxassetid://107150227368485"
+    QuickIcon.ImageColor3 = theme.Primary
+
+    local QuickText = Instance.new("TextLabel", QuickFrame)
+    QuickText.Size = UDim2.new(1, 0, 0, 14)
+    QuickText.Position = UDim2.new(0, 0, 1, 2)
+    QuickText.BackgroundTransparency = 1
+    QuickText.Text = Config.Name or "Quick"
+    QuickText.TextColor3 = theme.Text
+    QuickText.Font = Enum.Font.GothamBold
+    QuickText.TextSize = 10
+    QuickText.TextStrokeTransparency = 0.8
+
+    MakeDraggable(QuickFrame, QuickFrame)
+
+    local pulseTween = TweenService:Create(QuickStroke, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Transparency = 0.3})
+    pulseTween:Play()
+
+    local ClickBtn = Instance.new("TextButton", QuickFrame)
+    ClickBtn.Size = UDim2.new(1, 0, 1, 0)
+    ClickBtn.BackgroundTransparency = 1
+    ClickBtn.Text = ""
+    ClickBtn.ZIndex = 99999
+
+    if Config.Type == "Toggle" then
+        local toggled = Config.Default or false
+        QuickIcon.ImageColor3 = toggled and theme.Success or theme.Primary
+        ClickBtn.MouseButton1Click:Connect(function()
+            toggled = not toggled
+            QuickIcon.ImageColor3 = toggled and theme.Success or theme.Primary
+            if Config.Callback then Config.Callback(toggled) end
+        end)
+    elseif Config.Type == "Button" then
+        ClickBtn.MouseButton1Click:Connect(function()
+            TweenService:Create(QuickFrame, TweenInfo.new(0.1), {Size = UDim2.new(0, 55, 0, 55)}):Play()
+            task.wait(0.1)
+            TweenService:Create(QuickFrame, TweenInfo.new(0.2, Enum.EasingStyle.Back), {Size = UDim2.new(0, 60, 0, 60)}):Play()
+            if Config.Callback then Config.Callback() end
+        end)
+    elseif Config.Type == "Slider" then
+        local SliderBg = Instance.new("Frame", QuickFrame)
+        SliderBg.Size = UDim2.new(0.8, 0, 0, 4)
+        SliderBg.Position = UDim2.new(0.1, 0, 0.85, 0)
+        SliderBg.BackgroundColor3 = theme.Background
+        SliderBg.BorderSizePixel = 0
+        Instance.new("UICorner", SliderBg).CornerRadius = UDim.new(1, 0)
+
+        local SliderFill = Instance.new("Frame", SliderBg)
+        SliderFill.Size = UDim2.new(0.5, 0, 1, 0)
+        SliderFill.BackgroundColor3 = theme.Primary
+        SliderFill.BorderSizePixel = 0
+        Instance.new("UICorner", SliderFill).CornerRadius = UDim.new(1, 0)
+
+        local dragging = false
+        ClickBtn.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                dragging = true
+            end
+        end)
+        UserInputService.InputEnded:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                dragging = false
+            end
+        end)
+        UserInputService.InputChanged:Connect(function(input)
+            if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+                local relX = math.clamp((input.Position.X - SliderBg.AbsolutePosition.X) / SliderBg.AbsoluteSize.X, 0, 1)
+                SliderFill.Size = UDim2.new(relX, 0, 1, 0)
+                local val = math.floor(((Config.Max or 100) - (Config.Min or 0)) * relX + (Config.Min or 0))
+                if Config.Callback then Config.Callback(val) end
+            end
+        end)
+    end
+
+    QuickFrame.Size = UDim2.new(0, 0, 0, 0)
+    TweenService:Create(QuickFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 60, 0, 60)}):Play()
+
+    table.insert(self.ActiveButtons, QuickFrame)
+    return QuickFrame
+end
+
+-- ==========================================================
+-- 🏠 WINDOW CREATION
+-- ==========================================================
 function KustUI.CreateWindow(Options)
     local self = setmetatable({}, KustUI)
-    local theme = Options.Theme or KustUI.Themes.Default
-    if type(theme) == "string" then theme = KustUI.Themes[theme] or KustUI.Themes.Default end
-    self.Theme = theme
+    local theme = GetTheme()
 
     local TitleText = Options.Title or "Kust UI"
     local DescText = Options.Description or "Premium Library"
     local ThemeImage = Options.ThemeImage or "rbxassetid://103845371952278"
 
-    -- ScreenGui
     self.ScreenGui = Instance.new("ScreenGui")
     self.ScreenGui.Name = "KustUI_Premium"
     self.ScreenGui.ResetOnSpawn = false
     self.ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+
     pcall(function() self.ScreenGui.Parent = gethui() end)
     if not self.ScreenGui.Parent then pcall(function() self.ScreenGui.Parent = CoreGui end) end
     if not self.ScreenGui.Parent then self.ScreenGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui") end
 
-    -- Main Frame
-    self.MainFrame = Instance.new("Frame")
+    self.MainFrame = Instance.new("Frame", self.ScreenGui)
     self.MainFrame.Size = UDim2.new(0, 0, 0, 0)
     self.MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
     self.MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -291,49 +451,59 @@ function KustUI.CreateWindow(Options)
     self.MainFrame.BorderSizePixel = 0
     self.MainFrame.Active = true
     self.MainFrame.ClipsDescendants = true
-    self.MainFrame.Parent = self.ScreenGui
+    Instance.new("UICorner", self.MainFrame).CornerRadius = UDim.new(0, 10)
 
-    Instance.new("UICorner", self.MainFrame).CornerRadius = UDim.new(0, 8)
-
-    local bgGrad = Instance.new("UIGradient", self.MainFrame)
-    bgGrad.Color = ColorSequence.new({
+    local MainBgGradient = Instance.new("UIGradient", self.MainFrame)
+    MainBgGradient.Color = ColorSequence.new({
         ColorSequenceKeypoint.new(0, theme.Background),
-        ColorSequenceKeypoint.new(0.5, theme.BackgroundMid),
+        ColorSequenceKeypoint.new(0.5, theme.BackgroundLight),
         ColorSequenceKeypoint.new(1, theme.Background)
     })
-    bgGrad.Rotation = 45
-    TweenService:Create(bgGrad, TweenInfo.new(6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Offset = Vector2.new(0.3, 0.3)}):Play()
+    MainBgGradient.Rotation = 45
+    TweenService:Create(MainBgGradient, TweenInfo.new(6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Offset = Vector2.new(0.3, 0.3)}):Play()
 
-    local stroke = Instance.new("UIStroke", self.MainFrame)
-    stroke.Color = Color3.new(1,1,1)
-    stroke.Thickness = 1.2
-    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    local strokeGrad = ApplyGradient(stroke, theme)
-    TweenService:Create(strokeGrad, TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1), {Rotation = 360}):Play()
+    local Stroke = Instance.new("UIStroke", self.MainFrame)
+    Stroke.Color = Color3.new(1, 1, 1)
+    Stroke.Thickness = 1.2
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    local StrokeGrad = ApplyGradient(Stroke)
+    TweenService:Create(StrokeGrad, TweenInfo.new(5, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1), {Rotation = 360}):Play()
 
-    -- TopBar
-    self.TopBar = Instance.new("Frame")
+    local Shadow = Instance.new("ImageLabel", self.ScreenGui)
+    Shadow.Name = "Shadow"
+    Shadow.Size = UDim2.new(0, 740, 0, 470)
+    Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+    Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+    Shadow.BackgroundTransparency = 1
+    Shadow.Image = "rbxassetid://13132087769"
+    Shadow.ImageColor3 = Color3.new(0, 0, 0)
+    Shadow.ImageTransparency = 0.6
+    Shadow.ZIndex = 0
+
+    self.TopBar = Instance.new("Frame", self.MainFrame)
     self.TopBar.Size = UDim2.new(1, 0, 0, 65)
     self.TopBar.BackgroundTransparency = 1
     self.TopBar.ZIndex = 5
-    self.TopBar.Parent = self.MainFrame
     MakeDraggable(self.TopBar, self.MainFrame)
 
-    self.TitleLabel = Instance.new("TextLabel")
+    self.TitleLabel = Instance.new("TextLabel", self.TopBar)
     self.TitleLabel.Size = UDim2.new(0, 200, 0, 22)
     self.TitleLabel.Position = UDim2.new(0, 20, 0, 12)
     self.TitleLabel.BackgroundTransparency = 1
     self.TitleLabel.Text = TitleText
-    self.TitleLabel.TextColor3 = Color3.new(1,1,1)
+    self.TitleLabel.TextColor3 = Color3.new(1, 1, 1)
     self.TitleLabel.Font = Enum.Font.GothamBold
     self.TitleLabel.TextSize = 17
     self.TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
     self.TitleLabel.ZIndex = 5
-    self.TitleLabel.Parent = self.TopBar
-    local titleGrad = Instance.new("UIGradient", self.TitleLabel)
-    titleGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, theme.Primary), ColorSequenceKeypoint.new(1, theme.PrimaryDark)})
 
-    self.DescLabel = Instance.new("TextLabel")
+    local TitleGrad = Instance.new("UIGradient", self.TitleLabel)
+    TitleGrad.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, theme.Primary),
+        ColorSequenceKeypoint.new(1, theme.PrimaryDark)
+    })
+
+    self.DescLabel = Instance.new("TextLabel", self.TopBar)
     self.DescLabel.Size = UDim2.new(0, 200, 0, 15)
     self.DescLabel.Position = UDim2.new(0, 20, 0, 36)
     self.DescLabel.BackgroundTransparency = 1
@@ -343,22 +513,22 @@ function KustUI.CreateWindow(Options)
     self.DescLabel.TextSize = 12
     self.DescLabel.TextXAlignment = Enum.TextXAlignment.Left
     self.DescLabel.ZIndex = 5
-    self.DescLabel.Parent = self.TopBar
 
     local function CreateTopIconBtn(name, iconId, posOffset)
-        local btn = Instance.new("ImageButton")
+        local btn = Instance.new("ImageButton", self.TopBar)
         btn.Name = name
         btn.Size = UDim2.new(0, 20, 0, 20)
         btn.Position = UDim2.new(1, posOffset, 0.5, -10)
         btn.BackgroundTransparency = 1
         btn.Image = iconId
         btn.ZIndex = 5
-        btn.Parent = self.TopBar
-        local ig = Instance.new("UIGradient", btn)
-        ig.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, theme.PrimaryLight), ColorSequenceKeypoint.new(0.5, theme.Primary), ColorSequenceKeypoint.new(1, theme.PrimaryDark)})
-        ig.Rotation = 45
-        btn.MouseEnter:Connect(function() TweenService:Create(btn, TweenInfo.new(0.2), {Size = UDim2.new(0,23,0,23)}):Play() end)
-        btn.MouseLeave:Connect(function() TweenService:Create(btn, TweenInfo.new(0.2), {Size = UDim2.new(0,20,0,20)}):Play() end)
+        ApplyGradient(btn)
+        btn.MouseEnter:Connect(function()
+            TweenService:Create(btn, TweenInfo.new(0.2), {Size = UDim2.new(0, 23, 0, 23)}):Play()
+        end)
+        btn.MouseLeave:Connect(function()
+            TweenService:Create(btn, TweenInfo.new(0.2), {Size = UDim2.new(0, 20, 0, 20)}):Play()
+        end)
         return btn
     end
 
@@ -367,37 +537,35 @@ function KustUI.CreateWindow(Options)
     self.MinBtn = CreateTopIconBtn("Minimize", "rbxassetid://78357418744409", -110)
     self.TransBtn = CreateTopIconBtn("Transparency", "rbxassetid://101356891567422", -145)
 
-    -- Dividers
-    local topDiv = Instance.new("Frame", self.MainFrame)
-    topDiv.Size = UDim2.new(1, 0, 0, 1)
-    topDiv.Position = UDim2.new(0, 0, 0, 65)
-    topDiv.BackgroundColor3 = theme.Primary
-    topDiv.BackgroundTransparency = 0.7
-    topDiv.BorderSizePixel = 0
+    local TopDivider = Instance.new("Frame", self.MainFrame)
+    TopDivider.Size = UDim2.new(1, 0, 0, 1)
+    TopDivider.Position = UDim2.new(0, 0, 0, 65)
+    TopDivider.BackgroundColor3 = theme.Primary
+    TopDivider.BackgroundTransparency = 0.7
+    TopDivider.BorderSizePixel = 0
 
-    local sideDiv = Instance.new("Frame", self.MainFrame)
-    sideDiv.Size = UDim2.new(0, 1, 1, -65)
-    sideDiv.Position = UDim2.new(0, 160, 0, 65)
-    sideDiv.BackgroundColor3 = theme.Primary
-    sideDiv.BackgroundTransparency = 0.8
-    sideDiv.BorderSizePixel = 0
+    local SidebarDivider = Instance.new("Frame", self.MainFrame)
+    SidebarDivider.Size = UDim2.new(0, 1, 1, -65)
+    SidebarDivider.Position = UDim2.new(0, 160, 0, 65)
+    SidebarDivider.BackgroundColor3 = theme.Primary
+    SidebarDivider.BackgroundTransparency = 0.8
+    SidebarDivider.BorderSizePixel = 0
 
-    -- Tabs Menu
     self.TabsMenu = Instance.new("ScrollingFrame", self.MainFrame)
     self.TabsMenu.Name = "TabsMenu"
     self.TabsMenu.Size = UDim2.new(0, 160, 1, -65)
     self.TabsMenu.Position = UDim2.new(0, 0, 0, 65)
     self.TabsMenu.BackgroundTransparency = 1
     self.TabsMenu.ScrollBarThickness = 0
-    local tabsLayout = Instance.new("UIListLayout", self.TabsMenu)
-    tabsLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    tabsLayout.Padding = UDim.new(0, 6)
-    local tabsPad = Instance.new("UIPadding", self.TabsMenu)
-    tabsPad.PaddingTop = UDim.new(0, 15)
-    tabsPad.PaddingLeft = UDim.new(0, 10)
-    tabsPad.PaddingRight = UDim.new(0, 10)
 
-    -- Elements Menu
+    local TabsLayout = Instance.new("UIListLayout", self.TabsMenu)
+    TabsLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    TabsLayout.Padding = UDim.new(0, 6)
+    local TabsPadding = Instance.new("UIPadding", self.TabsMenu)
+    TabsPadding.PaddingTop = UDim.new(0, 15)
+    TabsPadding.PaddingLeft = UDim.new(0, 10)
+    TabsPadding.PaddingRight = UDim.new(0, 10)
+
     self.ElementsMenu = Instance.new("ScrollingFrame", self.MainFrame)
     self.ElementsMenu.Name = "ElementsMenu"
     self.ElementsMenu.Size = UDim2.new(1, -161, 1, -65)
@@ -422,52 +590,54 @@ function KustUI.CreateWindow(Options)
         end
     end)
 
-    -- TopBar Logic
     local isTransparent = false
     self.TransBtn.MouseButton1Click:Connect(function()
         isTransparent = not isTransparent
-        TweenService:Create(self.MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Sine), {BackgroundTransparency = isTransparent and 0.4 or 0}):Play()
+        local target = isTransparent and 0.4 or 0
+        TweenService:Create(self.MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Sine), {BackgroundTransparency = target}):Play()
     end)
 
     local isMaximized = false
     local normalSize = UDim2.new(0, 720, 0, 450)
     local maxSize = UDim2.new(0, 850, 0, 550)
+
     self.MaxBtn.MouseButton1Click:Connect(function()
         isMaximized = not isMaximized
         TweenService:Create(self.MainFrame, TweenInfo.new(0.6, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = isMaximized and maxSize or normalSize}):Play()
+        TweenService:Create(Shadow, TweenInfo.new(0.6), {Size = isMaximized and UDim2.new(0, 870, 0, 570) or UDim2.new(0, 740, 0, 470)}):Play()
     end)
 
-    -- Floating Button
-    self.FloatingBtn = Instance.new("ImageButton")
+    self.FloatingBtn = Instance.new("ImageButton", self.ScreenGui)
     self.FloatingBtn.Size = UDim2.new(0, 50, 0, 50)
     self.FloatingBtn.AnchorPoint = Vector2.new(0.5, 0.5)
     self.FloatingBtn.Position = UDim2.new(0.5, 0, 0.1, 30)
     self.FloatingBtn.BackgroundColor3 = Color3.fromRGB(15, 8, 5)
     self.FloatingBtn.AutoButtonColor = false
     self.FloatingBtn.Visible = false
-    self.FloatingBtn.Parent = self.ScreenGui
     Instance.new("UICorner", self.FloatingBtn).CornerRadius = UDim.new(0, 10)
-    local floatIcon = Instance.new("ImageLabel", self.FloatingBtn)
-    floatIcon.Size = UDim2.new(1, -6, 1, -6)
-    floatIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
-    floatIcon.AnchorPoint = Vector2.new(0.5, 0.5)
-    floatIcon.BackgroundTransparency = 1
-    floatIcon.Image = ThemeImage
-    floatIcon.ScaleType = Enum.ScaleType.Crop
-    Instance.new("UICorner", floatIcon).CornerRadius = UDim.new(0, 8)
-    local floatStroke = Instance.new("UIStroke", self.FloatingBtn)
-    floatStroke.Thickness = 1.5
-    floatStroke.Color = Color3.new(1,1,1)
-    ApplyGradient(floatStroke, theme)
+
+    local FloatIcon = Instance.new("ImageLabel", self.FloatingBtn)
+    FloatIcon.Size = UDim2.new(1, -6, 1, -6)
+    FloatIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
+    FloatIcon.AnchorPoint = Vector2.new(0.5, 0.5)
+    FloatIcon.BackgroundTransparency = 1
+    FloatIcon.Image = ThemeImage
+    FloatIcon.ScaleType = Enum.ScaleType.Crop
+    Instance.new("UICorner", FloatIcon).CornerRadius = UDim.new(0, 8)
+
+    local FloatStroke = Instance.new("UIStroke", self.FloatingBtn)
+    FloatStroke.Thickness = 1.5
+    FloatStroke.Color = Color3.new(1, 1, 1)
+    ApplyGradient(FloatStroke)
     MakeDraggable(self.FloatingBtn, self.FloatingBtn)
 
     self.MinBtn.MouseButton1Click:Connect(function()
-        TweenService:Create(self.MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0,0,0,0)}):Play()
+        TweenService:Create(self.MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0, 0, 0, 0)}):Play()
         task.wait(0.4)
         self.MainFrame.Visible = false
         self.FloatingBtn.Visible = true
         self.FloatingBtn.Size = UDim2.new(0, 0, 0, 0)
-        TweenService:Create(self.FloatingBtn, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0,50,0,50)}):Play()
+        TweenService:Create(self.FloatingBtn, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 50, 0, 50)}):Play()
     end)
 
     local dragStartPos = nil
@@ -479,7 +649,7 @@ function KustUI.CreateWindow(Options)
     self.FloatingBtn.InputEnded:Connect(function(input)
         if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and dragStartPos then
             if (input.Position - dragStartPos).Magnitude < 5 then
-                TweenService:Create(self.FloatingBtn, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0,0,0,0)}):Play()
+                TweenService:Create(self.FloatingBtn, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0, 0, 0, 0)}):Play()
                 task.wait(0.3)
                 self.FloatingBtn.Visible = false
                 self.MainFrame.Visible = true
@@ -489,7 +659,7 @@ function KustUI.CreateWindow(Options)
     end)
 
     self.CloseBtn.MouseButton1Click:Connect(function()
-        TweenService:Create(self.MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0,0,0,0)}):Play()
+        TweenService:Create(self.MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0, 0, 0, 0)}):Play()
         task.wait(0.4)
         self.ScreenGui:Destroy()
     end)
@@ -497,150 +667,245 @@ function KustUI.CreateWindow(Options)
     self.MainFrame.ClipsDescendants = false
     TweenService:Create(self.MainFrame, TweenInfo.new(0.7, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = normalSize}):Play()
 
+    function self:SetTheme(themeName)
+        if Themes[themeName] then
+            CurrentTheme = Themes[themeName]
+        end
+    end
+
+    function self:GetThemes()
+        local names = {}
+        for name, _ in pairs(Themes) do table.insert(names, name) end
+        return names
+    end
+
+    function self:AddCustomTheme(name, themeTable)
+        Themes[name] = themeTable
+    end
+
     return self
 end
 
--- ============================================================
--- ADD TAB
--- ============================================================
-function KustUI:AddTab(Options)
-    local theme = self.Theme
+-- ==========================================================
+-- 📑 TAB MODULE
+-- ==========================================================
+function KustUI:CreateTab(Options)
+    local theme = GetTheme()
     local Name = Options.Name or "Tab"
     local IconId = Options.Icon
 
-    local isFirst = true
+    local isFirstTab = false
+    local existingTabs = 0
     for _, v in ipairs(self.ElementsMenu:GetChildren()) do
-        if v.Name:match("_Container") then isFirst = false; break end
+        if v.Name:match("_Container") then existingTabs = existingTabs + 1 end
     end
+    if existingTabs == 0 then isFirstTab = true end
 
-    local TAB_BG = Color3.fromRGB(20, 15, 12)
-    local TAB_HOVER = Color3.fromRGB(30, 20, 15)
-    local TAB_SELECTED = Color3.fromRGB(45, 25, 10)
-    local TEXT_COLOR = Color3.fromRGB(180, 180, 180)
-    local TEXT_SELECTED = Color3.fromRGB(255, 255, 255)
-
-    local TabButton = Instance.new("TextButton")
+    local TabButton = Instance.new("TextButton", self.TabsMenu)
     TabButton.Name = Name .. "_TabBtn"
     TabButton.Size = UDim2.new(1, 0, 0, 38)
-    TabButton.BackgroundColor3 = isFirst and TAB_SELECTED or TAB_BG
+    TabButton.BackgroundColor3 = isFirstTab and theme.BackgroundLight or theme.Surface
     TabButton.Text = ""
     TabButton.AutoButtonColor = false
     TabButton.ClipsDescendants = true
-    TabButton.Parent = self.TabsMenu
     Instance.new("UICorner", TabButton).CornerRadius = UDim.new(0, 8)
-    local btnStroke = Instance.new("UIStroke", TabButton)
-    btnStroke.Color = theme.Primary
-    btnStroke.Thickness = 1
-    btnStroke.Transparency = isFirst and 0 or 1
-    btnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
-    local textOffset = 15
+    local Stroke = Instance.new("UIStroke", TabButton)
+    Stroke.Color = theme.Primary
+    Stroke.Thickness = 1
+    Stroke.Transparency = isFirstTab and 0 or 1
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+    local TextOffset = 15
     if IconId then
-        local icon = Instance.new("ImageLabel", TabButton)
-        icon.Size = UDim2.new(0, 16, 0, 16)
-        icon.Position = UDim2.new(0, 12, 0.5, 0)
-        icon.AnchorPoint = Vector2.new(0, 0.5)
-        icon.BackgroundTransparency = 1
-        icon.Image = IconId
-        icon.ImageColor3 = isFirst and theme.Primary or TEXT_COLOR
-        textOffset = 36
+        local Icon = Instance.new("ImageLabel", TabButton)
+        Icon.Size = UDim2.new(0, 16, 0, 16)
+        Icon.Position = UDim2.new(0, 12, 0.5, 0)
+        Icon.AnchorPoint = Vector2.new(0, 0.5)
+        Icon.BackgroundTransparency = 1
+        Icon.Image = IconId
+        Icon.ImageColor3 = isFirstTab and theme.Primary or theme.TextDim
+        TextOffset = 36
     end
 
     local Title = Instance.new("TextLabel", TabButton)
-    Title.Size = UDim2.new(1, -textOffset, 1, 0)
-    Title.Position = UDim2.new(0, textOffset, 0, 0)
+    Title.Size = UDim2.new(1, -TextOffset, 1, 0)
+    Title.Position = UDim2.new(0, TextOffset, 0, 0)
     Title.BackgroundTransparency = 1
     Title.Text = Name
-    Title.TextColor3 = isFirst and TEXT_SELECTED or TEXT_COLOR
+    Title.TextColor3 = isFirstTab and theme.Text or theme.TextDim
     Title.Font = Enum.Font.GothamMedium
     Title.TextSize = 13
     Title.TextXAlignment = Enum.TextXAlignment.Left
 
-    local TabContainer = Instance.new("ScrollingFrame")
+    local TabContainer = Instance.new("ScrollingFrame", self.ElementsMenu)
     TabContainer.Name = Name .. "_Container"
     TabContainer.Size = UDim2.new(1, 0, 1, 0)
     TabContainer.BackgroundTransparency = 1
     TabContainer.ScrollBarThickness = 0
-    TabContainer.Visible = isFirst
+    TabContainer.Visible = isFirstTab
     TabContainer.ClipsDescendants = true
-    TabContainer.Parent = self.ElementsMenu
 
-    local pad = Instance.new("UIPadding", TabContainer)
-    pad.PaddingTop = UDim.new(0, 12)
-    pad.PaddingBottom = UDim.new(0, 12)
-    pad.PaddingLeft = UDim.new(0, 12)
-    pad.PaddingRight = UDim.new(0, 12)
-    local layout = Instance.new("UIListLayout", TabContainer)
-    layout.SortOrder = Enum.SortOrder.LayoutOrder
-    layout.Padding = UDim.new(0, 8)
+    local Padding = Instance.new("UIPadding", TabContainer)
+    Padding.PaddingTop = UDim.new(0, 12)
+    Padding.PaddingBottom = UDim.new(0, 12)
+    Padding.PaddingLeft = UDim.new(0, 12)
+    Padding.PaddingRight = UDim.new(0, 12)
+
+    local Layout = Instance.new("UIListLayout", TabContainer)
+    Layout.SortOrder = Enum.SortOrder.LayoutOrder
+    Layout.Padding = UDim.new(0, 8)
 
     TabButton.MouseButton1Click:Connect(function()
         if TabContainer.Visible then return end
-        for _, c in ipairs(self.ElementsMenu:GetChildren()) do
-            if c:IsA("ScrollingFrame") then c.Visible = false end
+        for _, child in ipairs(self.ElementsMenu:GetChildren()) do
+            if child:IsA("ScrollingFrame") then child.Visible = false end
         end
-        for _, b in ipairs(self.TabsMenu:GetChildren()) do
-            if b:IsA("TextButton") then
-                TweenService:Create(b, TweenInfo.new(0.25), {BackgroundColor3 = TAB_BG}):Play()
-                TweenService:Create(b:FindFirstChild("UIStroke"), TweenInfo.new(0.25), {Transparency = 1}):Play()
-                local txt = b:FindFirstChildOfClass("TextLabel")
-                if txt then TweenService:Create(txt, TweenInfo.new(0.25), {TextColor3 = TEXT_COLOR}):Play() end
-                local ic = b:FindFirstChildOfClass("ImageLabel")
-                if ic then TweenService:Create(ic, TweenInfo.new(0.25), {ImageColor3 = TEXT_COLOR}):Play() end
+        for _, btn in ipairs(self.TabsMenu:GetChildren()) do
+            if btn:IsA("TextButton") then
+                TweenService:Create(btn, TweenInfo.new(0.25), {BackgroundColor3 = theme.Surface}):Play()
+                TweenService:Create(btn:FindFirstChild("UIStroke"), TweenInfo.new(0.25), {Transparency = 1}):Play()
+                local txt = btn:FindFirstChildOfClass("TextLabel")
+                if txt then TweenService:Create(txt, TweenInfo.new(0.25), {TextColor3 = theme.TextDim}):Play() end
+                local icon = btn:FindFirstChildOfClass("ImageLabel")
+                if icon then TweenService:Create(icon, TweenInfo.new(0.25), {ImageColor3 = theme.TextDim}):Play() end
             end
         end
         TabContainer.Visible = true
-        TweenService:Create(TabButton, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = TAB_SELECTED}):Play()
-        TweenService:Create(btnStroke, TweenInfo.new(0.3), {Transparency = 0}):Play()
-        TweenService:Create(Title, TweenInfo.new(0.3), {TextColor3 = TEXT_SELECTED}):Play()
-        local curIcon = TabButton:FindFirstChildOfClass("ImageLabel")
-        if curIcon then TweenService:Create(curIcon, TweenInfo.new(0.3), {ImageColor3 = theme.Primary}):Play() end
+        TweenService:Create(TabButton, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = theme.BackgroundLight}):Play()
+        TweenService:Create(Stroke, TweenInfo.new(0.3), {Transparency = 0}):Play()
+        TweenService:Create(Title, TweenInfo.new(0.3), {TextColor3 = theme.Text}):Play()
+        local currentIcon = TabButton:FindFirstChildOfClass("ImageLabel")
+        if currentIcon then TweenService:Create(currentIcon, TweenInfo.new(0.3), {ImageColor3 = theme.Primary}):Play() end
     end)
 
     TabButton.MouseEnter:Connect(function()
-        if not TabContainer.Visible then TweenService:Create(TabButton, TweenInfo.new(0.2), {BackgroundColor3 = TAB_HOVER}):Play() end
+        if not TabContainer.Visible then
+            TweenService:Create(TabButton, TweenInfo.new(0.2), {BackgroundColor3 = theme.SurfaceHover}):Play()
+        end
     end)
     TabButton.MouseLeave:Connect(function()
-        if not TabContainer.Visible then TweenService:Create(TabButton, TweenInfo.new(0.2), {BackgroundColor3 = TAB_BG}):Play() end
+        if not TabContainer.Visible then
+            TweenService:Create(TabButton, TweenInfo.new(0.2), {BackgroundColor3 = theme.Surface}):Play()
+        end
     end)
 
     return TabContainer
 end
 
--- ============================================================
--- ADD BUTTON (with Hold 3s -> QuickButton)
--- ============================================================
-function KustUI:AddButton(Tab, Options)
-    local theme = self.Theme
+-- ==========================================================
+-- 📦 SECTION MODULE
+-- ==========================================================
+function KustUI:CreateSection(ParentFrame, SectionName)
+    local theme = GetTheme()
+    local isExpanded = false
+    local headerHeight = 32
+
+    local Container = Instance.new("Frame", ParentFrame)
+    Container.Name = SectionName .. "_Section"
+    Container.Size = UDim2.new(1, 0, 0, headerHeight)
+    Container.BackgroundColor3 = theme.Surface
+    Container.ClipsDescendants = true
+    Instance.new("UICorner", Container).CornerRadius = UDim.new(0, 5)
+
+    local HeaderBtn = Instance.new("TextButton", Container)
+    HeaderBtn.Size = UDim2.new(1, 0, 0, headerHeight)
+    HeaderBtn.BackgroundColor3 = theme.Surface
+    HeaderBtn.AutoButtonColor = false
+    HeaderBtn.Text = ""
+    Instance.new("UICorner", HeaderBtn).CornerRadius = UDim.new(0, 5)
+
+    local Title = Instance.new("TextLabel", HeaderBtn)
+    Title.Size = UDim2.new(1, -40, 1, 0)
+    Title.Position = UDim2.new(0, 12, 0, 0)
+    Title.BackgroundTransparency = 1
+    Title.Text = SectionName
+    Title.TextColor3 = theme.Text
+    Title.Font = Enum.Font.GothamMedium
+    Title.TextSize = 13
+    Title.TextXAlignment = Enum.TextXAlignment.Left
+
+    local Arrow = Instance.new("ImageLabel", HeaderBtn)
+    Arrow.Size = UDim2.new(0, 14, 0, 14)
+    Arrow.Position = UDim2.new(1, -24, 0.5, -7)
+    Arrow.BackgroundTransparency = 1
+    Arrow.Image = "rbxassetid://10392248278"
+    Arrow.ImageColor3 = theme.TextDim
+    Arrow.Rotation = 0
+
+    local ContentFrame = Instance.new("Frame", Container)
+    ContentFrame.Size = UDim2.new(1, 0, 0, 0)
+    ContentFrame.Position = UDim2.new(0, 0, 0, headerHeight)
+    ContentFrame.BackgroundTransparency = 1
+
+    local UIListLayout = Instance.new("UIListLayout", ContentFrame)
+    UIListLayout.Padding = UDim.new(0, 4)
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+    local UIPadding = Instance.new("UIPadding", ContentFrame)
+    UIPadding.PaddingTop = UDim.new(0, 6)
+    UIPadding.PaddingBottom = UDim.new(0, 6)
+
+    HeaderBtn.MouseEnter:Connect(function()
+        TweenService:Create(HeaderBtn, TweenInfo.new(0.15), {BackgroundColor3 = theme.SurfaceHover}):Play()
+    end)
+    HeaderBtn.MouseLeave:Connect(function()
+        TweenService:Create(HeaderBtn, TweenInfo.new(0.15), {BackgroundColor3 = theme.Surface}):Play()
+    end)
+
+    HeaderBtn.MouseButton1Click:Connect(function()
+        isExpanded = not isExpanded
+        TweenService:Create(Arrow, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = isExpanded and 90 or 0}):Play()
+        local targetHeight = isExpanded and (headerHeight + UIListLayout.AbsoluteContentSize.Y + 12) or headerHeight
+        TweenService:Create(Container, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, targetHeight)}):Play()
+    end)
+
+    UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+        if isExpanded then
+            Container.Size = UDim2.new(1, 0, 0, headerHeight + UIListLayout.AbsoluteContentSize.Y + 12)
+        end
+    end)
+
+    return ContentFrame
+end
+
+-- ==========================================================
+-- 🔘 BUTTON MODULE
+-- ==========================================================
+function KustUI:CreateButton(ParentFrame, Options)
+    local theme = GetTheme()
     local text = Options.Name or "Button"
     local callback = Options.Callback or function() end
     local iconId = Options.Icon or "rbxassetid://107150227368485"
-    local holdCallback = Options.HoldCallback or function() end
+    local quickConfig = Options.QuickButton
 
-    local Button = Instance.new("TextButton")
+    local Button = Instance.new("TextButton", ParentFrame)
     Button.Name = text .. "_Btn"
     Button.Size = UDim2.new(1, 0, 0, 44)
-    Button.BackgroundColor3 = theme.ElementBg
+    Button.BackgroundColor3 = theme.Surface
     Button.Text = ""
     Button.AutoButtonColor = false
-    Button.Parent = Tab
     Instance.new("UICorner", Button).CornerRadius = UDim.new(0, 8)
 
-    local btnGrad = Instance.new("UIGradient", Button)
-    btnGrad.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, Color3.fromRGB(255,255,255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(190,190,190))})
-    btnGrad.Rotation = 90
+    local UIModGradient = Instance.new("UIGradient", Button)
+    UIModGradient.Color = ColorSequence.new({
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(190, 190, 190))
+    })
+    UIModGradient.Rotation = 90
 
-    local clip = Instance.new("Frame", Button)
-    clip.Size = UDim2.new(1, 0, 1, 0)
-    clip.BackgroundTransparency = 1
-    clip.ClipsDescendants = true
-    Instance.new("UICorner", clip).CornerRadius = UDim.new(0, 8)
+    local ClipContainer = Instance.new("Frame", Button)
+    ClipContainer.Size = UDim2.new(1, 0, 1, 0)
+    ClipContainer.BackgroundTransparency = 1
+    ClipContainer.ClipsDescendants = true
+    Instance.new("UICorner", ClipContainer).CornerRadius = UDim.new(0, 8)
 
-    local btnStroke = Instance.new("UIStroke", Button)
-    btnStroke.Color = theme.Primary
-    btnStroke.Thickness = 1
-    btnStroke.Transparency = 0.7
-    btnStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    local Stroke = Instance.new("UIStroke", Button)
+    Stroke.Color = theme.Primary
+    Stroke.Thickness = 1
+    Stroke.Transparency = 0.7
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
     local Title = Instance.new("TextLabel", Button)
     Title.Size = UDim2.new(1, -55, 1, 0)
@@ -662,101 +927,68 @@ function KustUI:AddButton(Tab, Options)
     RightIcon.ImageColor3 = theme.Primary
     RightIcon.ZIndex = 2
 
-    -- Hover
     Button.MouseEnter:Connect(function()
-        TweenService:Create(Button, TweenInfo.new(0.25, Enum.EasingStyle.Quart), {BackgroundColor3 = theme.ElementHover}):Play()
-        TweenService:Create(btnStroke, TweenInfo.new(0.25, Enum.EasingStyle.Quart), {Thickness = 1.6, Transparency = 0.2}):Play()
+        TweenService:Create(Button, TweenInfo.new(0.25, Enum.EasingStyle.Quart), {BackgroundColor3 = theme.SurfaceHover}):Play()
+        TweenService:Create(Stroke, TweenInfo.new(0.25, Enum.EasingStyle.Quart), {Thickness = 1.6, Transparency = 0.2}):Play()
     end)
     Button.MouseLeave:Connect(function()
-        TweenService:Create(Button, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {BackgroundColor3 = theme.ElementBg}):Play()
-        TweenService:Create(btnStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {Thickness = 1, Transparency = 0.7}):Play()
+        TweenService:Create(Button, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {BackgroundColor3 = theme.Surface}):Play()
+        TweenService:Create(Stroke, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {Thickness = 1, Transparency = 0.7}):Play()
     end)
 
-    -- Ripple
     Button.MouseButton1Down:Connect(function()
-        local mouse = Players.LocalPlayer:GetMouse()
-        local X, Y = mouse.X - Button.AbsolutePosition.X, mouse.Y - Button.AbsolutePosition.Y
-        local ripple = Instance.new("Frame", clip)
-        ripple.BackgroundColor3 = theme.Primary
-        ripple.BackgroundTransparency = 0.4
-        ripple.Position = UDim2.new(0, X, 0, Y)
-        ripple.AnchorPoint = Vector2.new(0.5, 0.5)
-        Instance.new("UICorner", ripple).CornerRadius = UDim.new(1, 0)
-        local ts = math.max(Button.AbsoluteSize.X, Button.AbsoluteSize.Y) * 1.6
-        TweenService:Create(ripple, TweenInfo.new(0.45, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, ts, 0, ts), BackgroundTransparency = 1}):Play()
-        task.delay(0.45, function() ripple:Destroy() end)
+        local Mouse = Players.LocalPlayer:GetMouse()
+        local X, Y = Mouse.X - Button.AbsolutePosition.X, Mouse.Y - Button.AbsolutePosition.Y
+        CreateRipple(ClipContainer, Vector2.new(X, Y))
     end)
 
-    -- Hold 3s -> QuickButton
-    local holding = false
+    -- Hold 3s for QuickButton
     local holdStart = 0
-    local quickBtn = nil
-    local holdConn = nil
+    local holding = false
 
-    Button.MouseButton1Down:Connect(function()
-        holding = true
-        holdStart = tick()
-        if holdConn then holdConn:Disconnect() end
-        holdConn = RunService.RenderStepped:Connect(function()
-            if holding and (tick() - holdStart) >= 3 then
-                holding = false
-                holdConn:Disconnect()
-                -- Spawn QuickButton
-                if quickBtn then quickBtn:Destroy() end
-                quickBtn = Instance.new("ImageButton")
-                quickBtn.Name = text .. "_Quick"
-                quickBtn.Size = UDim2.new(0, 0, 0, 0)
-                quickBtn.AnchorPoint = Vector2.new(0.5, 0.5)
-                quickBtn.Position = UDim2.new(0.5, 0, 0.8, 0)
-                quickBtn.BackgroundColor3 = Color3.fromRGB(15, 8, 5)
-                quickBtn.AutoButtonColor = false
-                quickBtn.Parent = self.ScreenGui
-                quickBtn.ZIndex = 200
-                Instance.new("UICorner", quickBtn).CornerRadius = UDim.new(1, 0)
-                local qIcon = Instance.new("ImageLabel", quickBtn)
-                qIcon.Size = UDim2.new(0.7, 0, 0.7, 0)
-                qIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
-                qIcon.AnchorPoint = Vector2.new(0.5, 0.5)
-                qIcon.BackgroundTransparency = 1
-                qIcon.Image = iconId
-                qIcon.ImageColor3 = theme.Primary
-                local qStroke = Instance.new("UIStroke", quickBtn)
-                qStroke.Thickness = 2
-                qStroke.Color = Color3.new(1,1,1)
-                ApplyGradient(qStroke, theme)
-                MakeDraggable(quickBtn, quickBtn)
-                TweenService:Create(quickBtn, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 55, 0, 55)}):Play()
-                quickBtn.MouseButton1Click:Connect(function()
-                    callback()
-                    TweenService:Create(quickBtn, TweenInfo.new(0.3), {Size = UDim2.new(0, 45, 0, 45)}):Play()
-                    task.wait(0.15)
-                    TweenService:Create(quickBtn, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 55, 0, 55)}):Play()
-                end)
-                holdCallback(quickBtn)
-            end
-        end)
-    end)
-
-    Button.MouseButton1Up:Connect(function()
-        if holding and (tick() - holdStart) < 3 then
-            holding = false
-            if holdConn then holdConn:Disconnect() end
-            callback()
-        else
-            holding = false
-            if holdConn then holdConn:Disconnect() end
+    Button.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            holding = true
+            holdStart = tick()
+            TweenService:Create(Button, TweenInfo.new(0.2), {BackgroundColor3 = theme.PrimaryDark}):Play()
+            task.spawn(function()
+                while holding do
+                    if tick() - holdStart >= 3 then
+                        holding = false
+                        if quickConfig then
+                            QuickButtonModule:CreateFromElement(Button, quickConfig)
+                        end
+                        TweenService:Create(Button, TweenInfo.new(0.3), {BackgroundColor3 = theme.Surface}):Play()
+                        break
+                    end
+                    task.wait(0.1)
+                end
+            end)
         end
     end)
 
-    ApplyLock(Button, Options, theme)
+    Button.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            holding = false
+            TweenService:Create(Button, TweenInfo.new(0.3), {BackgroundColor3 = theme.Surface}):Play()
+            if tick() - holdStart < 3 then
+                callback()
+            end
+        end
+    end)
+
+    if Options.Locked then
+        LockModule.Apply(Button, Options)
+    end
+
     return Button
 end
 
--- ============================================================
--- ADD TOGGLE (Drag Right = ON, Lift Effect)
--- ============================================================
-function KustUI:AddToggle(Tab, Options)
-    local theme = self.Theme
+-- ==========================================================
+-- 🔄 TOGGLE MODULE (Drag Right = ON, Drag Left = OFF)
+-- ==========================================================
+function KustUI:CreateToggle(ParentFrame, Options)
+    local theme = GetTheme()
     local TName = Options.Name or "Toggle"
     local TType = string.lower(Options.Type or "default")
     local State = Options.Default or false
@@ -766,19 +998,18 @@ function KustUI:AddToggle(Tab, Options)
     local hasLeft = (Pos == "Left" or Pos == "Both") and IconId ~= nil
     local hasRight = (Pos == "Right" or Pos == "Both") and IconId ~= nil
 
-    local ToggleFrame = Instance.new("Frame")
+    local ToggleFrame = Instance.new("Frame", ParentFrame)
     ToggleFrame.Name = TName .. "_Toggle"
     ToggleFrame.Size = UDim2.new(1, 0, 0, 42)
-    ToggleFrame.BackgroundColor3 = theme.ElementBg
-    ToggleFrame.Parent = Tab
+    ToggleFrame.BackgroundColor3 = theme.Surface
     Instance.new("UICorner", ToggleFrame).CornerRadius = UDim.new(0, 8)
 
-    local stroke = Instance.new("UIStroke", ToggleFrame)
-    stroke.Color = theme.Primary
-    stroke.Thickness = 1
-    stroke.Transparency = 0.8
-    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    TweenService:Create(stroke, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Transparency = 0.2}):Play()
+    local Stroke = Instance.new("UIStroke", ToggleFrame)
+    Stroke.Color = theme.Primary
+    Stroke.Thickness = 1
+    Stroke.Transparency = 0.8
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    TweenService:Create(Stroke, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Transparency = 0.2}):Play()
 
     local InteractBtn = Instance.new("TextButton", ToggleFrame)
     InteractBtn.Size = UDim2.new(1, 0, 1, 0)
@@ -787,24 +1018,25 @@ function KustUI:AddToggle(Tab, Options)
 
     local titleOffset = 15
     if hasLeft then
-        local li = Instance.new("ImageLabel", ToggleFrame)
-        li.Size = UDim2.new(0, 20, 0, 20)
-        li.Position = UDim2.new(0, 15, 0.5, 0)
-        li.AnchorPoint = Vector2.new(0, 0.5)
-        li.BackgroundTransparency = 1
-        li.Image = IconId
-        li.ImageColor3 = theme.Primary
+        local LeftIcon = Instance.new("ImageLabel", ToggleFrame)
+        LeftIcon.Size = UDim2.new(0, 20, 0, 20)
+        LeftIcon.Position = UDim2.new(0, 15, 0.5, 0)
+        LeftIcon.AnchorPoint = Vector2.new(0, 0.5)
+        LeftIcon.BackgroundTransparency = 1
+        LeftIcon.Image = IconId
+        LeftIcon.ImageColor3 = theme.Primary
         titleOffset = 45
     end
+
     local rightOffset = -15
     if hasRight then
-        local ri = Instance.new("ImageLabel", ToggleFrame)
-        ri.Size = UDim2.new(0, 20, 0, 20)
-        ri.Position = UDim2.new(1, -15, 0.5, 0)
-        ri.AnchorPoint = Vector2.new(1, 0.5)
-        ri.BackgroundTransparency = 1
-        ri.Image = IconId
-        ri.ImageColor3 = theme.Primary
+        local RightIcon = Instance.new("ImageLabel", ToggleFrame)
+        RightIcon.Size = UDim2.new(0, 20, 0, 20)
+        RightIcon.Position = UDim2.new(1, -15, 0.5, 0)
+        RightIcon.AnchorPoint = Vector2.new(1, 0.5)
+        RightIcon.BackgroundTransparency = 1
+        RightIcon.Image = IconId
+        RightIcon.ImageColor3 = theme.Primary
         rightOffset = -45
     end
 
@@ -818,8 +1050,8 @@ function KustUI:AddToggle(Tab, Options)
     Title.TextSize = 15
     Title.TextXAlignment = Enum.TextXAlignment.Left
 
-    -- Toggle Visuals
-    local Pill, Circle
+    local originalPos = ToggleFrame.Position
+
     if TType == "box" then
         local Box = Instance.new("Frame", ToggleFrame)
         Box.Size = UDim2.new(0, 24, 0, 24)
@@ -827,9 +1059,9 @@ function KustUI:AddToggle(Tab, Options)
         Box.AnchorPoint = Vector2.new(1, 0.5)
         Box.BackgroundColor3 = Color3.fromRGB(15, 10, 8)
         Instance.new("UICorner", Box).CornerRadius = UDim.new(0, 6)
-        local bs = Instance.new("UIStroke", Box)
-        bs.Thickness = 1.5
-        bs.Color = Color3.fromRGB(80, 80, 80)
+        local BoxStroke = Instance.new("UIStroke", Box)
+        BoxStroke.Thickness = 1.5
+        BoxStroke.Color = Color3.fromRGB(80, 80, 80)
         local Check = Instance.new("ImageLabel", Box)
         Check.Size = UDim2.new(0, 0, 0, 0)
         Check.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -837,27 +1069,83 @@ function KustUI:AddToggle(Tab, Options)
         Check.BackgroundTransparency = 1
         Check.Image = "rbxassetid://6257079049"
         Check.ImageColor3 = Color3.fromRGB(20, 15, 12)
+
         local function Update()
             if State then
                 TweenService:Create(Box, TweenInfo.new(0.2), {BackgroundColor3 = theme.Primary}):Play()
-                TweenService:Create(bs, TweenInfo.new(0.2), {Color = theme.Primary}):Play()
+                TweenService:Create(BoxStroke, TweenInfo.new(0.2), {Color = theme.Primary}):Play()
                 TweenService:Create(Check, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0.8, 0, 0.8, 0)}):Play()
             else
                 TweenService:Create(Box, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(15, 10, 8)}):Play()
-                TweenService:Create(bs, TweenInfo.new(0.2), {Color = Color3.fromRGB(80, 80, 80)}):Play()
+                TweenService:Create(BoxStroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(80, 80, 80)}):Play()
                 TweenService:Create(Check, TweenInfo.new(0.2), {Size = UDim2.new(0, 0, 0, 0)}):Play()
             end
         end
-        InteractBtn.MouseButton1Click:Connect(function() State = not State; Update(); Callback(State) end)
+
+        local dragStartX, dragStartY
+        local isDragging = false
+        local dragThreshold = 15
+
+        InteractBtn.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragStartX = input.Position.X
+                dragStartY = input.Position.Y
+                isDragging = false
+            end
+        end)
+
+        InteractBtn.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                if dragStartX then
+                    local deltaX = input.Position.X - dragStartX
+                    local deltaY = input.Position.Y - dragStartY
+                    if math.abs(deltaX) > 5 or math.abs(deltaY) > 5 then
+                        isDragging = true
+                        local liftAmount = math.clamp(math.abs(deltaX) / 150, 0, 0.12)
+                        local liftY = math.clamp(-math.abs(deltaY) * 0.15, -8, 0)
+                        TweenService:Create(ToggleFrame, TweenInfo.new(0.08), {
+                            Position = UDim2.new(originalPos.X.Scale, originalPos.X.Offset, originalPos.Y.Scale, originalPos.Y.Offset + liftY),
+                            BackgroundTransparency = liftAmount
+                        }):Play()
+                    end
+                end
+            end
+        end)
+
+        InteractBtn.InputEnded:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                TweenService:Create(ToggleFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back), {
+                    Position = originalPos,
+                    BackgroundTransparency = 0
+                }):Play()
+
+                if dragStartX then
+                    local deltaX = input.Position.X - dragStartX
+                    if math.abs(deltaX) > dragThreshold then
+                        if deltaX > 0 and not State then
+                            State = true; Update(); Callback(State)
+                        elseif deltaX < 0 and State then
+                            State = false; Update(); Callback(State)
+                        end
+                    elseif not isDragging then
+                        State = not State; Update(); Callback(State)
+                    end
+                end
+                dragStartX = nil
+                isDragging = false
+            end
+        end)
+
         Update()
     else
-        Pill = Instance.new("Frame", ToggleFrame)
+        local Pill = Instance.new("Frame", ToggleFrame)
         Pill.Size = UDim2.new(0, 44, 0, 22)
         Pill.Position = UDim2.new(1, rightOffset, 0.5, 0)
         Pill.AnchorPoint = Vector2.new(1, 0.5)
-        Pill.BackgroundColor3 = theme.ToggleOff
+        Pill.BackgroundColor3 = Color3.fromRGB(40, 35, 35)
         Instance.new("UICorner", Pill).CornerRadius = UDim.new(1, 0)
-        Circle = Instance.new("Frame", Pill)
+
+        local Circle = Instance.new("Frame", Pill)
         Circle.Size = UDim2.new(0, 18, 0, 18)
         Circle.Position = UDim2.new(0, 2, 0.5, 0)
         Circle.AnchorPoint = Vector2.new(0, 0.5)
@@ -865,87 +1153,104 @@ function KustUI:AddToggle(Tab, Options)
         Instance.new("UICorner", Circle).CornerRadius = UDim.new(1, 0)
 
         local function Update()
-            local targetBg = State and theme.Primary or theme.ToggleOff
+            local targetBg = State and theme.Primary or Color3.fromRGB(40, 35, 35)
             local targetPos = State and UDim2.new(1, -20, 0.5, 0) or UDim2.new(0, 2, 0.5, 0)
             TweenService:Create(Pill, TweenInfo.new(0.3), {BackgroundColor3 = targetBg}):Play()
             TweenService:Create(Circle, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = targetPos}):Play()
         end
 
-        -- Drag Right = ON with Lift Effect
-        local dragging = false
-        local dragStartPos = nil
-        local originalPos = ToggleFrame.Position
+        local dragStartX, dragStartY
+        local isDragging = false
+
         InteractBtn.InputBegan:Connect(function(input)
             if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-                dragging = true
-                dragStartPos = input.Position
-                originalPos = ToggleFrame.Position
+                dragStartX = input.Position.X
+                dragStartY = input.Position.Y
+                isDragging = false
             end
         end)
-        UserInputService.InputChanged:Connect(function(input)
-            if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-                local delta = input.Position - dragStartPos
-                if delta.X > 5 then
-                    -- Lift effect when dragging right
-                    TweenService:Create(ToggleFrame, TweenInfo.new(0.15), {
-                        Position = originalPos + UDim2.new(0, 0, 0, -6),
-                        BackgroundTransparency = 0.3
-                    }):Play()
+
+        InteractBtn.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                if dragStartX then
+                    local deltaX = input.Position.X - dragStartX
+                    local deltaY = input.Position.Y - dragStartY
+                    if math.abs(deltaX) > 5 or math.abs(deltaY) > 5 then
+                        isDragging = true
+                        local liftAmount = math.clamp(math.abs(deltaX) / 150, 0, 0.12)
+                        local liftY = math.clamp(-math.abs(deltaY) * 0.15, -8, 0)
+                        TweenService:Create(ToggleFrame, TweenInfo.new(0.08), {
+                            Position = UDim2.new(originalPos.X.Scale, originalPos.X.Offset, originalPos.Y.Scale, originalPos.Y.Offset + liftY),
+                            BackgroundTransparency = liftAmount
+                        }):Play()
+                    end
                 end
             end
         end)
-        UserInputService.InputEnded:Connect(function(input)
-            if dragging and (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then
-                dragging = false
-                local delta = input.Position - dragStartPos
-                -- Return to original position and opacity
-                TweenService:Create(ToggleFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+
+        InteractBtn.InputEnded:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                TweenService:Create(ToggleFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back), {
                     Position = originalPos,
                     BackgroundTransparency = 0
                 }):Play()
-                -- Determine state: if dragged right significantly OR circle is on the right side
-                if delta.X > 15 then
-                    State = true
-                elseif delta.X < -15 then
-                    State = false
-                else
-                    State = not State
+
+                if dragStartX then
+                    local deltaX = input.Position.X - dragStartX
+                    if math.abs(deltaX) > 15 then
+                        if deltaX > 0 and not State then
+                            State = true; Update(); Callback(State)
+                        elseif deltaX < 0 and State then
+                            State = false; Update(); Callback(State)
+                        end
+                    elseif not isDragging then
+                        State = not State; Update(); Callback(State)
+                    end
                 end
-                Update()
-                Callback(State)
+                dragStartX = nil
+                isDragging = false
             end
         end)
+
         Update()
     end
 
-    InteractBtn.MouseEnter:Connect(function() TweenService:Create(ToggleFrame, TweenInfo.new(0.2), {BackgroundColor3 = theme.ElementHover}):Play() end)
-    InteractBtn.MouseLeave:Connect(function() TweenService:Create(ToggleFrame, TweenInfo.new(0.2), {BackgroundColor3 = theme.ElementBg}):Play() end)
+    InteractBtn.MouseEnter:Connect(function()
+        TweenService:Create(ToggleFrame, TweenInfo.new(0.2), {BackgroundColor3 = theme.SurfaceHover}):Play()
+    end)
+    InteractBtn.MouseLeave:Connect(function()
+        TweenService:Create(ToggleFrame, TweenInfo.new(0.2), {BackgroundColor3 = theme.Surface}):Play()
+    end)
 
-    ApplyLock(ToggleFrame, Options, theme)
+    if Options.Locked then
+        LockModule.Apply(ToggleFrame, Options)
+    end
+
     return ToggleFrame
 end
 
--- ============================================================
--- ADD SLIDER (Drag Up = Lift Effect)
--- ============================================================
-function KustUI:AddSlider(Tab, Options)
-    local theme = self.Theme
+-- ==========================================================
+-- 🎚️ SLIDER MODULE (Drag Up = Lift & Transparent Effect)
+-- ==========================================================
+function KustUI:CreateSlider(ParentFrame, Options)
+    local theme = GetTheme()
     local Name = Options.Name or "Slider"
     local Min = Options.Min or 0
     local Max = Options.Max or 100
     local Default = Options.Default or Min
     local IconID = Options.Icon
     local Callback = Options.Callback or function() end
+    local Increment = Options.Increment or 1
 
-    local Container = Instance.new("Frame", Tab)
-    Container.Size = UDim2.new(1, -20, 0, 50)
-    Container.BackgroundTransparency = 1
+    local SliderContainer = Instance.new("Frame", ParentFrame)
+    SliderContainer.Size = UDim2.new(1, -20, 0, 50)
+    SliderContainer.BackgroundTransparency = 1
 
-    local Header = Instance.new("Frame", Container)
+    local Header = Instance.new("Frame", SliderContainer)
     Header.Size = UDim2.new(1, 0, 0, 20)
     Header.BackgroundTransparency = 1
 
-    local titleOffset = 5
+    local TitleOffset = 5
     if IconID then
         local Icon = Instance.new("ImageLabel", Header)
         Icon.Size = UDim2.new(0, 16, 0, 16)
@@ -953,12 +1258,12 @@ function KustUI:AddSlider(Tab, Options)
         Icon.BackgroundTransparency = 1
         Icon.Image = IconID
         Icon.ImageColor3 = theme.Primary
-        titleOffset = 26
+        TitleOffset = 26
     end
 
     local TitleLabel = Instance.new("TextLabel", Header)
     TitleLabel.Size = UDim2.new(1, -60, 1, 0)
-    TitleLabel.Position = UDim2.new(0, titleOffset, 0, 0)
+    TitleLabel.Position = UDim2.new(0, TitleOffset, 0, 0)
     TitleLabel.BackgroundTransparency = 1
     TitleLabel.Text = Name
     TitleLabel.TextColor3 = theme.Text
@@ -976,7 +1281,7 @@ function KustUI:AddSlider(Tab, Options)
     ValueDisplay.TextSize = 13
     ValueDisplay.TextXAlignment = Enum.TextXAlignment.Right
 
-    local TrackArea = Instance.new("Frame", Container)
+    local TrackArea = Instance.new("Frame", SliderContainer)
     TrackArea.Size = UDim2.new(1, -10, 0, 20)
     TrackArea.Position = UDim2.new(0, 5, 0, 25)
     TrackArea.BackgroundTransparency = 1
@@ -984,7 +1289,7 @@ function KustUI:AddSlider(Tab, Options)
     local Track = Instance.new("Frame", TrackArea)
     Track.Size = UDim2.new(1, 0, 0, 4)
     Track.Position = UDim2.new(0, 0, 0.5, -2)
-    Track.BackgroundColor3 = theme.TrackBg
+    Track.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
     Instance.new("UICorner", Track).CornerRadius = UDim.new(1, 0)
 
     local Fill = Instance.new("Frame", Track)
@@ -1005,13 +1310,11 @@ function KustUI:AddSlider(Tab, Options)
     local TargetPct = (Default - Min) / (Max - Min)
     local CurrentPct = TargetPct
     local Mouse = Players.LocalPlayer:GetMouse()
-    local originalContainerPos = Container.Position
-    local liftActive = false
+    local originalPos = SliderContainer.Position
 
     Thumb.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             Dragging = true
-            originalContainerPos = Container.Position
             TweenService:Create(Thumb, TweenInfo.new(0.2), {Size = UDim2.new(0, 36, 0, 22)}):Play()
         end
     end)
@@ -1020,11 +1323,10 @@ function KustUI:AddSlider(Tab, Options)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             if Dragging then
                 Dragging = false
-                liftActive = false
                 TweenService:Create(Thumb, TweenInfo.new(0.2), {Size = UDim2.new(0, 32, 0, 18)}):Play()
-                -- Return to original position and opacity
-                TweenService:Create(Container, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-                    Position = originalContainerPos,
+                -- Return to normal
+                TweenService:Create(SliderContainer, TweenInfo.new(0.3, Enum.EasingStyle.Back), {
+                    Position = originalPos,
                     BackgroundTransparency = 1
                 }):Play()
             end
@@ -1035,45 +1337,47 @@ function KustUI:AddSlider(Tab, Options)
         if Dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
             local pos = math.clamp((Mouse.X - Track.AbsolutePosition.X) / Track.AbsoluteSize.X, 0, 1)
             TargetPct = pos
-            -- Lift effect when dragging up slightly
-            local deltaY = input.Position.Y - (Thumb.AbsolutePosition.Y + Thumb.AbsoluteSize.Y / 2)
-            if deltaY < -10 and not liftActive then
-                liftActive = true
-                TweenService:Create(Container, TweenInfo.new(0.15), {
-                    Position = originalContainerPos + UDim2.new(0, 0, 0, -4),
-                    BackgroundTransparency = 0.85
-                }):Play()
-            elseif deltaY > -5 and liftActive then
-                liftActive = false
-                TweenService:Create(Container, TweenInfo.new(0.15), {
-                    Position = originalContainerPos,
-                    BackgroundTransparency = 1
-                }):Play()
-            end
+
+            -- Lift & transparent effect based on vertical drag
+            local deltaY = input.Position.Y - (Track.AbsolutePosition.Y + Track.AbsoluteSize.Y/2)
+            local liftAmount = math.clamp(-math.abs(deltaY) * 0.008, -6, 0)
+            local transparency = math.clamp(math.abs(deltaY) * 0.003, 0, 0.15)
+
+            TweenService:Create(SliderContainer, TweenInfo.new(0.08), {
+                Position = UDim2.new(originalPos.X.Scale, originalPos.X.Offset, originalPos.Y.Scale, originalPos.Y.Offset + liftAmount),
+                BackgroundTransparency = transparency
+            }):Play()
         end
     end)
 
     RunService.RenderStepped:Connect(function()
+        CurrentPct = CurrentPct + (TargetPct - CurrentPct) * 0.4
+        if math.abs(TargetPct - CurrentPct) < 0.001 then CurrentPct = TargetPct end
+
+        Thumb.Position = UDim2.new(CurrentPct, 0, 0.5, 0)
+        Fill.Size = UDim2.new(CurrentPct, 0, 1, 0)
+
+        local rawVal = Min + (CurrentPct * (Max - Min))
+        local val = math.floor(rawVal / Increment + 0.5) * Increment
+        ValueDisplay.Text = tostring(val)
+
         if Dragging or math.abs(TargetPct - CurrentPct) > 0.001 then
-            CurrentPct = CurrentPct + (TargetPct - CurrentPct) * 0.4
-            if math.abs(TargetPct - CurrentPct) < 0.001 then CurrentPct = TargetPct end
-            Thumb.Position = UDim2.new(CurrentPct, 0, 0.5, 0)
-            Fill.Size = UDim2.new(CurrentPct, 0, 1, 0)
-            local val = math.floor(Min + (CurrentPct * (Max - Min)))
-            ValueDisplay.Text = tostring(val)
             Callback(val)
         end
     end)
 
-    ApplyLock(Container, Options, theme)
-    return Container
+    if Options.Locked then
+        LockModule.Apply(SliderContainer, Options)
+    end
+
+    return SliderContainer
 end
 
--- ============================================================
--- ADD DROPDOWN
--- ============================================================
-function KustUI:AddDropdown(Tab, Options)
-    local theme = self.Theme
+-- ==========================================================
+-- 📋 DROPDOWN MODULE
+-- ==========================================================
+function KustUI:CreateDropdown(ParentFrame, Options)
+    local theme = GetTheme()
     local DName = Options.Name or "Dropdown"
     local OptionsList = Options.Options or {}
     local Max = Options.Max or 1
@@ -1084,20 +1388,19 @@ function KustUI:AddDropdown(Tab, Options)
     local IsOpen = false
     local FollowConnection = nil
 
-    local DropdownFrame = Instance.new("TextButton")
+    local DropdownFrame = Instance.new("TextButton", ParentFrame)
     DropdownFrame.Name = DName .. "_Dropdown"
     DropdownFrame.Size = UDim2.new(1, -24, 0, 42)
-    DropdownFrame.BackgroundColor3 = theme.ElementBg
+    DropdownFrame.BackgroundColor3 = theme.Surface
     DropdownFrame.AutoButtonColor = false
     DropdownFrame.Text = ""
-    DropdownFrame.Parent = Tab
     Instance.new("UICorner", DropdownFrame).CornerRadius = UDim.new(0, 6)
 
-    local stroke = Instance.new("UIStroke", DropdownFrame)
-    stroke.Color = theme.Primary
-    stroke.Thickness = 1
-    stroke.Transparency = 0.8
-    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    local Stroke = Instance.new("UIStroke", DropdownFrame)
+    Stroke.Color = theme.Primary
+    Stroke.Thickness = 1
+    Stroke.Transparency = 0.8
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
     local Title = Instance.new("TextLabel", DropdownFrame)
     Title.Size = UDim2.new(0.5, 0, 1, 0)
@@ -1128,18 +1431,19 @@ function KustUI:AddDropdown(Tab, Options)
     Arrow.ImageColor3 = theme.TextDark
     Arrow.ScaleType = Enum.ScaleType.Fit
 
-    local ScreenGui = Tab:FindFirstAncestorOfClass("ScreenGui")
+    local ScreenGui = ParentFrame:FindFirstAncestorOfClass("ScreenGui")
+
     local FloatingFrame = Instance.new("Frame")
     FloatingFrame.Size = UDim2.new(0, 0, 0, 0)
-    FloatingFrame.BackgroundColor3 = Color3.fromRGB(15, 12, 10)
+    FloatingFrame.BackgroundColor3 = theme.Background
     FloatingFrame.ZIndex = 100
     FloatingFrame.ClipsDescendants = true
     FloatingFrame.Visible = false
     FloatingFrame.Parent = ScreenGui
     Instance.new("UICorner", FloatingFrame).CornerRadius = UDim.new(0, 6)
-    local fs = Instance.new("UIStroke", FloatingFrame)
-    fs.Color = theme.Primary
-    fs.Transparency = 0.5
+    local FloatStroke = Instance.new("UIStroke", FloatingFrame)
+    FloatStroke.Color = theme.Primary
+    FloatStroke.Transparency = 0.5
 
     local Scroll = Instance.new("ScrollingFrame", FloatingFrame)
     Scroll.Size = UDim2.new(1, 0, 1, 0)
@@ -1159,13 +1463,17 @@ function KustUI:AddDropdown(Tab, Options)
 
     local function UpdateValueText()
         if #SelectedOptions == 0 then
-            ValueText.Text = "..."; ValueText.TextColor3 = theme.TextDark
+            ValueText.Text = "..."
+            ValueText.TextColor3 = theme.TextDark
         elseif #SelectedOptions == 1 then
-            ValueText.Text = SelectedOptions[1]; ValueText.TextColor3 = theme.Primary
+            ValueText.Text = SelectedOptions[1]
+            ValueText.TextColor3 = theme.Primary
         else
-            ValueText.Text = #SelectedOptions .. "/" .. Max .. " Selected"; ValueText.TextColor3 = theme.Primary
+            ValueText.Text = #SelectedOptions .. "/" .. Max .. " Selected"
+            ValueText.TextColor3 = theme.Primary
         end
     end
+
     local function RefreshHighlights()
         for _, data in ipairs(OptionButtons) do
             if table.find(SelectedOptions, data.Text) then
@@ -1191,11 +1499,12 @@ function KustUI:AddDropdown(Tab, Options)
         table.insert(OptionButtons, {Btn = OptBtn, Text = option})
 
         OptBtn.MouseEnter:Connect(function()
-            TweenService:Create(OptBtn, TweenInfo.new(0.15), {BackgroundTransparency = 0, BackgroundColor3 = theme.ElementHover}):Play()
+            TweenService:Create(OptBtn, TweenInfo.new(0.15), {BackgroundTransparency = 0, BackgroundColor3 = theme.SurfaceHover}):Play()
         end)
         OptBtn.MouseLeave:Connect(function()
             TweenService:Create(OptBtn, TweenInfo.new(0.15), {BackgroundTransparency = 1}):Play()
         end)
+
         OptBtn.MouseButton1Click:Connect(function()
             local isSelected = table.find(SelectedOptions, option)
             if Max == 1 then
@@ -1208,11 +1517,15 @@ function KustUI:AddDropdown(Tab, Options)
             else
                 if isSelected then
                     table.remove(SelectedOptions, isSelected)
-                elseif #SelectedOptions < Max then
-                    table.insert(SelectedOptions, option)
+                else
+                    if #SelectedOptions < Max then
+                        table.insert(SelectedOptions, option)
+                    end
                 end
             end
-            UpdateValueText(); RefreshHighlights(); Callback(SelectedOptions)
+            UpdateValueText()
+            RefreshHighlights()
+            Callback(SelectedOptions)
         end)
     end
 
@@ -1225,6 +1538,7 @@ function KustUI:AddDropdown(Tab, Options)
             Scroll.CanvasSize = UDim2.new(0, 0, 0, (#OptionsList * 32) + 4)
         end
     end
+
     local function ToggleDropdown()
         IsOpen = not IsOpen
         if IsOpen then
@@ -1236,20 +1550,24 @@ function KustUI:AddDropdown(Tab, Options)
         else
             TweenService:Create(Arrow, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {Rotation = 0}):Play()
             local closeTween = TweenService:Create(FloatingFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, DropdownFrame.AbsoluteSize.X, 0, 0)})
-            closeTween:Play(); closeTween.Completed:Wait(); FloatingFrame.Visible = false
+            closeTween:Play()
+            closeTween.Completed:Wait()
+            FloatingFrame.Visible = false
             if FollowConnection then FollowConnection:Disconnect() end
         end
     end
+
     DropdownFrame.MouseButton1Click:Connect(ToggleDropdown)
 
     local function IsMouseOver(frame)
         local mouse = UserInputService:GetMouseLocation()
         local inset = GuiService:GetGuiInset()
-        local mx, my = mouse.X, mouse.Y - inset.Y
+        local mouseX, mouseY = mouse.X, mouse.Y - inset.Y
         local pos = frame.AbsolutePosition
         local size = frame.AbsoluteSize
-        return mx >= pos.X and mx <= pos.X + size.X and my >= pos.Y and my <= pos.Y + size.Y
+        return mouseX >= pos.X and mouseX <= pos.X + size.X and mouseY >= pos.Y and mouseY <= pos.Y + size.Y
     end
+
     UserInputService.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
             if IsOpen and not IsMouseOver(DropdownFrame) and not IsMouseOver(FloatingFrame) then
@@ -1258,15 +1576,18 @@ function KustUI:AddDropdown(Tab, Options)
         end
     end)
 
-    ApplyLock(DropdownFrame, Options, theme)
+    if Options.Locked then
+        LockModule.Apply(DropdownFrame, Options)
+    end
+
     return DropdownFrame
 end
 
--- ============================================================
--- ADD TEXTBOX
--- ============================================================
-function KustUI:AddTextbox(Tab, Options)
-    local theme = self.Theme
+-- ==========================================================
+-- 📝 TEXTBOX MODULE
+-- ==========================================================
+function KustUI:CreateTextbox(ParentFrame, Options)
+    local theme = GetTheme()
     local TName = Options.Name or "Textbox"
     local Callback = Options.Callback or function() end
     local Placeholder = Options.Placeholder or "Type here..."
@@ -1275,40 +1596,40 @@ function KustUI:AddTextbox(Tab, Options)
     local hasLeft = (Pos == "Left" or Pos == "Both") and IconId ~= nil
     local hasRight = (Pos == "Right" or Pos == "Both") and IconId ~= nil
 
-    local TextboxFrame = Instance.new("Frame")
+    local TextboxFrame = Instance.new("Frame", ParentFrame)
     TextboxFrame.Name = TName .. "_Textbox"
     TextboxFrame.Size = UDim2.new(1, 0, 0, 42)
-    TextboxFrame.BackgroundColor3 = theme.ElementBg
-    TextboxFrame.Parent = Tab
+    TextboxFrame.BackgroundColor3 = theme.Surface
     Instance.new("UICorner", TextboxFrame).CornerRadius = UDim.new(0, 8)
 
-    local stroke = Instance.new("UIStroke", TextboxFrame)
-    stroke.Color = theme.Primary
-    stroke.Thickness = 1
-    stroke.Transparency = 0.8
-    stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-    TweenService:Create(stroke, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Transparency = 0.2}):Play()
+    local Stroke = Instance.new("UIStroke", TextboxFrame)
+    Stroke.Color = theme.Primary
+    Stroke.Thickness = 1
+    Stroke.Transparency = 0.8
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    TweenService:Create(Stroke, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {Transparency = 0.2}):Play()
 
     local titleOffset = 15
     if hasLeft then
-        local li = Instance.new("ImageLabel", TextboxFrame)
-        li.Size = UDim2.new(0, 20, 0, 20)
-        li.Position = UDim2.new(0, 15, 0.5, 0)
-        li.AnchorPoint = Vector2.new(0, 0.5)
-        li.BackgroundTransparency = 1
-        li.Image = IconId
-        li.ImageColor3 = theme.Primary
+        local LeftIcon = Instance.new("ImageLabel", TextboxFrame)
+        LeftIcon.Size = UDim2.new(0, 20, 0, 20)
+        LeftIcon.Position = UDim2.new(0, 15, 0.5, 0)
+        LeftIcon.AnchorPoint = Vector2.new(0, 0.5)
+        LeftIcon.BackgroundTransparency = 1
+        LeftIcon.Image = IconId
+        LeftIcon.ImageColor3 = theme.Primary
         titleOffset = 45
     end
+
     local rightOffset = -15
     if hasRight then
-        local ri = Instance.new("ImageLabel", TextboxFrame)
-        ri.Size = UDim2.new(0, 20, 0, 20)
-        ri.Position = UDim2.new(1, -15, 0.5, 0)
-        ri.AnchorPoint = Vector2.new(1, 0.5)
-        ri.BackgroundTransparency = 1
-        ri.Image = IconId
-        ri.ImageColor3 = theme.Primary
+        local RightIcon = Instance.new("ImageLabel", TextboxFrame)
+        RightIcon.Size = UDim2.new(0, 20, 0, 20)
+        RightIcon.Position = UDim2.new(1, -15, 0.5, 0)
+        RightIcon.AnchorPoint = Vector2.new(1, 0.5)
+        RightIcon.BackgroundTransparency = 1
+        RightIcon.Image = IconId
+        RightIcon.ImageColor3 = theme.Primary
         rightOffset = -45
     end
 
@@ -1330,53 +1651,66 @@ function KustUI:AddTextbox(Tab, Options)
     InputBox.Text = ""
     InputBox.PlaceholderText = Placeholder
     InputBox.TextColor3 = theme.Primary
-    InputBox.PlaceholderColor3 = Color3.fromRGB(120, 120, 120)
+    InputBox.PlaceholderColor3 = theme.TextDark
     InputBox.Font = Enum.Font.GothamSemibold
     InputBox.TextSize = 13
     InputBox.ClearTextOnFocus = false
     InputBox.ClipsDescendants = true
     Instance.new("UICorner", InputBox).CornerRadius = UDim.new(0, 6)
-    local inputStroke = Instance.new("UIStroke", InputBox)
-    inputStroke.Color = theme.Primary
-    inputStroke.Thickness = 1
-    inputStroke.Transparency = 1
-    inputStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
-    TextboxFrame.MouseEnter:Connect(function() TweenService:Create(TextboxFrame, TweenInfo.new(0.2), {BackgroundColor3 = theme.ElementHover}):Play() end)
-    TextboxFrame.MouseLeave:Connect(function() TweenService:Create(TextboxFrame, TweenInfo.new(0.2), {BackgroundColor3 = theme.ElementBg}):Play() end)
+    local InputStroke = Instance.new("UIStroke", InputBox)
+    InputStroke.Color = theme.Primary
+    InputStroke.Thickness = 1
+    InputStroke.Transparency = 1
+    InputStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+    TextboxFrame.MouseEnter:Connect(function()
+        TweenService:Create(TextboxFrame, TweenInfo.new(0.2), {BackgroundColor3 = theme.SurfaceHover}):Play()
+    end)
+    TextboxFrame.MouseLeave:Connect(function()
+        TweenService:Create(TextboxFrame, TweenInfo.new(0.2), {BackgroundColor3 = theme.Surface}):Play()
+    end)
+
     InputBox.Focused:Connect(function()
-        TweenService:Create(inputStroke, TweenInfo.new(0.2), {Transparency = 0}):Play()
-        TweenService:Create(InputBox, TweenInfo.new(0.2), {BackgroundColor3 = theme.ElementHover}):Play()
+        TweenService:Create(InputStroke, TweenInfo.new(0.2), {Transparency = 0}):Play()
+        TweenService:Create(InputBox, TweenInfo.new(0.2), {BackgroundColor3 = theme.SurfaceHover}):Play()
     end)
     InputBox.FocusLost:Connect(function()
-        TweenService:Create(inputStroke, TweenInfo.new(0.3), {Transparency = 1}):Play()
+        TweenService:Create(InputStroke, TweenInfo.new(0.3), {Transparency = 1}):Play()
         TweenService:Create(InputBox, TweenInfo.new(0.3), {BackgroundColor3 = Color3.fromRGB(15, 10, 8)}):Play()
         Callback(InputBox.Text)
     end)
 
-    ApplyLock(TextboxFrame, Options, theme)
+    if Options.Locked then
+        LockModule.Apply(TextboxFrame, Options)
+    end
+
     return TextboxFrame
 end
 
--- ============================================================
--- ADD KEYBIND
--- ============================================================
-function KustUI:AddKeybind(Tab, Options)
-    local theme = self.Theme
+-- ==========================================================
+-- ⌨️ KEYBIND MODULE
+-- ==========================================================
+function KustUI:CreateKeybind(ParentFrame, Options)
+    local theme = GetTheme()
     local KName = Options.Name or "Keybind"
     local CurrentKey = Options.Default or Enum.KeyCode.RightShift
     local Callback = Options.Callback or function() end
+
     local IsListening = false
     local Connection = nil
 
-    local KeybindFrame = Instance.new("Frame")
+    local KeybindFrame = Instance.new("Frame", ParentFrame)
     KeybindFrame.Name = KName .. "_Keybind"
     KeybindFrame.Size = UDim2.new(1, -24, 0, 42)
-    KeybindFrame.BackgroundColor3 = theme.ElementBg
-    KeybindFrame.Parent = Tab
+    KeybindFrame.BackgroundColor3 = theme.Surface
     Instance.new("UICorner", KeybindFrame).CornerRadius = UDim.new(0, 5)
-    local ks = Instance.new("UIStroke", KeybindFrame)
-    ks.Color = theme.Primary; ks.Thickness = 1; ks.Transparency = 0.8; ks.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+    local Stroke = Instance.new("UIStroke", KeybindFrame)
+    Stroke.Color = theme.Primary
+    Stroke.Thickness = 1
+    Stroke.Transparency = 0.8
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
     local Title = Instance.new("TextLabel", KeybindFrame)
     Title.Size = UDim2.new(0.5, 0, 1, 0)
@@ -1398,54 +1732,66 @@ function KustUI:AddKeybind(Tab, Options)
     BindBox.Font = Enum.Font.GothamBold
     BindBox.TextSize = 12
     Instance.new("UICorner", BindBox).CornerRadius = UDim.new(0, 5)
-    local bs = Instance.new("UIStroke", BindBox)
-    bs.Color = theme.Primary; bs.Transparency = 1
+    local BoxStroke = Instance.new("UIStroke", BindBox)
+    BoxStroke.Color = theme.Primary
+    BoxStroke.Thickness = 1
+    BoxStroke.Transparency = 1
 
     local function StopListening()
         IsListening = false
         BindBox.Text = CurrentKey.Name
-        TweenService:Create(bs, TweenInfo.new(0.2), {Transparency = 1}):Play()
+        TweenService:Create(BoxStroke, TweenInfo.new(0.2), {Transparency = 1}):Play()
         TweenService:Create(BindBox, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(30, 20, 15)}):Play()
-        if Connection then Connection:Disconnect(); Connection = nil end
+        if Connection then
+            Connection:Disconnect()
+            Connection = nil
+        end
     end
+
     BindBox.MouseButton1Click:Connect(function()
         if IsListening then return end
         IsListening = true
         BindBox.Text = "..."
-        TweenService:Create(bs, TweenInfo.new(0.2), {Transparency = 0}):Play()
-        TweenService:Create(BindBox, TweenInfo.new(0.2), {BackgroundColor3 = theme.ElementBg}):Play()
+        TweenService:Create(BoxStroke, TweenInfo.new(0.2), {Transparency = 0}):Play()
+        TweenService:Create(BindBox, TweenInfo.new(0.2), {BackgroundColor3 = theme.SurfaceHover}):Play()
+
         Connection = UserInputService.InputBegan:Connect(function(Input)
             if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
-                StopListening(); return
+                StopListening()
+                return
             end
             if Input.UserInputType == Enum.UserInputType.Keyboard then
                 local key = Input.KeyCode
                 if key == Enum.KeyCode.Backspace or key == Enum.KeyCode.Escape then
                     StopListening()
                 else
-                    CurrentKey = key; StopListening(); Callback(CurrentKey)
+                    CurrentKey = key
+                    StopListening()
+                    Callback(CurrentKey)
                 end
             end
         end)
     end)
 
-    ApplyLock(KeybindFrame, Options, theme)
+    if Options.Locked then
+        LockModule.Apply(KeybindFrame, Options)
+    end
+
     return KeybindFrame
 end
 
--- ============================================================
--- ADD COLORPICKER
--- ============================================================
-function KustUI:AddColorpicker(Tab, Options)
-    local theme = self.Theme
+-- ==========================================================
+-- 🎨 COLORPICKER MODULE
+-- ==========================================================
+function KustUI:CreateColorpicker(ParentFrame, Options)
+    local theme = GetTheme()
     local Name = Options.Name or "Color Picker"
     local Default = Options.Default or Color3.fromRGB(255, 255, 255)
     local Callback = Options.Callback or function() end
 
-    local MainFrame = Instance.new("Frame")
+    local MainFrame = Instance.new("Frame", ParentFrame)
     MainFrame.Size = UDim2.new(1, 0, 0, 42)
-    MainFrame.BackgroundColor3 = theme.ElementBg
-    MainFrame.Parent = Tab
+    MainFrame.BackgroundColor3 = theme.Surface
     Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 8)
 
     local Title = Instance.new("TextLabel", MainFrame)
@@ -1468,45 +1814,51 @@ function KustUI:AddColorpicker(Tab, Options)
     InteractBtn.Size = UDim2.new(1, 0, 1, 0)
     InteractBtn.BackgroundTransparency = 1
     InteractBtn.Text = ""
+
     InteractBtn.MouseButton1Click:Connect(function()
         local newColor = Color3.fromRGB(math.random(200,255), math.random(100,150), 0)
         TweenService:Create(ColorShow, TweenInfo.new(0.3), {BackgroundColor3 = newColor}):Play()
         Callback(newColor)
     end)
 
-    ApplyLock(MainFrame, Options, theme)
+    if Options.Locked then
+        LockModule.Apply(MainFrame, Options)
+    end
+
     return MainFrame
 end
 
--- ============================================================
--- ADD LABEL
--- ============================================================
-function KustUI:AddLabel(Tab, Options)
-    local theme = self.Theme
+-- ==========================================================
+-- 🏷️ LABEL MODULE
+-- ==========================================================
+function KustUI:CreateLabel(ParentFrame, Options)
+    local theme = GetTheme()
     local Text = Options.Name or "Information..."
-    local LabelFrame = Instance.new("TextLabel")
+    local TextColor = Options.Color or theme.TextDim
+    local FontSize = Options.Size or 12
+
+    local LabelFrame = Instance.new("TextLabel", ParentFrame)
     LabelFrame.Size = UDim2.new(1, 0, 0, 20)
     LabelFrame.BackgroundTransparency = 1
     LabelFrame.Text = "ℹ️ " .. Text
-    LabelFrame.TextColor3 = theme.TextDim
+    LabelFrame.TextColor3 = TextColor
     LabelFrame.Font = Enum.Font.GothamMedium
-    LabelFrame.TextSize = 12
+    LabelFrame.TextSize = FontSize
     LabelFrame.TextXAlignment = Enum.TextXAlignment.Left
-    LabelFrame.Parent = Tab
+
     return LabelFrame
 end
 
--- ============================================================
--- ADD SECTION
--- ============================================================
-function KustUI:AddSection(Tab, Options)
-    local theme = self.Theme
-    local SectionName = Options.Name or "Section"
-    local SectionFrame = Instance.new("Frame")
+-- ==========================================================
+-- 📊 PROGRESSBAR / SECTION HEADER MODULE
+-- ==========================================================
+function KustUI:CreateProgressSection(ParentFrame, SectionName)
+    local theme = GetTheme()
+
+    local SectionFrame = Instance.new("Frame", ParentFrame)
     SectionFrame.Name = SectionName .. "_Section"
     SectionFrame.Size = UDim2.new(1, 0, 0, 38)
     SectionFrame.BackgroundTransparency = 1
-    SectionFrame.Parent = Tab
 
     local Title = Instance.new("TextLabel", SectionFrame)
     Title.Name = "Title"
@@ -1519,84 +1871,11 @@ function KustUI:AddSection(Tab, Options)
     Title.TextSize = 15
     Title.TextXAlignment = Enum.TextXAlignment.Left
     Title.TextYAlignment = Enum.TextYAlignment.Bottom
+
     return SectionFrame
 end
 
--- ============================================================
--- ADD COLLAPSIBLE SECTION
--- ============================================================
-function KustUI:AddCollapsibleSection(Tab, Options)
-    local theme = self.Theme
-    local SectionName = Options.Name or "Section"
-    local isExpanded = false
-    local headerHeight = 32
-
-    local Container = Instance.new("Frame")
-    Container.Name = SectionName .. "_Section"
-    Container.Size = UDim2.new(1, 0, 0, headerHeight)
-    Container.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-    Container.ClipsDescendants = true
-    Container.Parent = Tab
-    Instance.new("UICorner", Container).CornerRadius = UDim.new(0, 5)
-
-    local HeaderBtn = Instance.new("TextButton", Container)
-    HeaderBtn.Size = UDim2.new(1, 0, 0, headerHeight)
-    HeaderBtn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    HeaderBtn.AutoButtonColor = false
-    HeaderBtn.Text = ""
-    Instance.new("UICorner", HeaderBtn).CornerRadius = UDim.new(0, 5)
-
-    local Title = Instance.new("TextLabel", HeaderBtn)
-    Title.Size = UDim2.new(1, -40, 1, 0)
-    Title.Position = UDim2.new(0, 12, 0, 0)
-    Title.BackgroundTransparency = 1
-    Title.Text = SectionName
-    Title.TextColor3 = theme.Text
-    Title.Font = Enum.Font.GothamMedium
-    Title.TextSize = 13
-    Title.TextXAlignment = Enum.TextXAlignment.Left
-
-    local Arrow = Instance.new("ImageLabel", HeaderBtn)
-    Arrow.Size = UDim2.new(0, 14, 0, 14)
-    Arrow.Position = UDim2.new(1, -24, 0.5, -7)
-    Arrow.BackgroundTransparency = 1
-    Arrow.Image = "rbxassetid://10392248278"
-    Arrow.ImageColor3 = Color3.fromRGB(170, 170, 170)
-    Arrow.Rotation = 0
-
-    local ContentFrame = Instance.new("Frame", Container)
-    ContentFrame.Size = UDim2.new(1, 0, 0, 0)
-    ContentFrame.Position = UDim2.new(0, 0, 0, headerHeight)
-    ContentFrame.BackgroundTransparency = 1
-
-    local UIListLayout = Instance.new("UIListLayout", ContentFrame)
-    UIListLayout.Padding = UDim.new(0, 4)
-    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-
-    local UIPadding = Instance.new("UIPadding", ContentFrame)
-    UIPadding.PaddingTop = UDim.new(0, 6)
-    UIPadding.PaddingBottom = UDim.new(0, 6)
-
-    HeaderBtn.MouseEnter:Connect(function()
-        TweenService:Create(HeaderBtn, TweenInfo.new(0.15), {BackgroundColor3 = Color3.fromRGB(38, 38, 38)}):Play()
-    end)
-    HeaderBtn.MouseLeave:Connect(function()
-        TweenService:Create(HeaderBtn, TweenInfo.new(0.15), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
-    end)
-    HeaderBtn.MouseButton1Click:Connect(function()
-        isExpanded = not isExpanded
-        TweenService:Create(Arrow, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = isExpanded and 90 or 0}):Play()
-        local targetHeight = isExpanded and (headerHeight + UIListLayout.AbsoluteContentSize.Y + 12) or headerHeight
-        TweenService:Create(Container, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, targetHeight)}):Play()
-    end)
-    UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-        if isExpanded then
-            Container.Size = UDim2.new(1, 0, 0, headerHeight + UIListLayout.AbsoluteContentSize.Y + 12)
-        end
-    end)
-
-    return ContentFrame
-end
-
+-- ==========================================================
+-- 🎯 RETURN LIBRARY
+-- ==========================================================
 return KustUI
